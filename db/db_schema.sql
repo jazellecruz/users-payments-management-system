@@ -149,6 +149,7 @@ CREATE TABLE business_profile_applications (
     authorization_letter_url VARCHAR(255), -- nullable for business owners
     proof_of_address_url VARCHAR(255) NOT NULL,
     id_picture_url VARCHAR(255) NOT NULL,
+    agreed_to_terms BOOLEAN DEFAULT FALSE,
     is_operating BOOLEAN DEFAULT FALSE,
     is_latest_approved BOOLEAN DEFAULT FALSE, 
     reviewed_at TIMESTAMP DEFAULT NULL,
