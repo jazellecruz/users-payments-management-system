@@ -1,0 +1,50 @@
+# Environment Files
+.env
+.env.local
+.env.development
+.env.production
+
+# Composer Files
+vendor/
+
+# XAMPP/MAMP/WAMP files 
+htdocs/
+
+# JetBrains IDE config files
+.idea/  
+
+# System and Editor-Specific Files
+.DS_Store  # macOS Finder metadata
+Thumbs.db  # Windows thumbnail cache
+*.bak      # Backup files
+*.swp      # Vim swap files
+*.swo      # Vim swap files
+*.tmp      # Temporary files
+
+# Logs and Cache Files
+logs/
+*.log
+cache/
+storage/
+debug.log
+error_log
+
+# PHPStorm/WebStorm files
+/.idea/
+
+# Upload Folders used in Development
+uploads/
+
+# Ignore session files
+sessions/
+
+# Ignore PHPUnit test results
+phpunit.xml
+phpunit.xml.dist
+coverage/
+build/
+
+# Ignore user-specific files
+*.iml
+*.sublime-workspace
+*.sublime-project
