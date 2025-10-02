@@ -47,4 +47,5 @@ build/
 # Ignore user-specific files
 *.iml
 *.sublime-workspace
-*.sublime-project"index.php" 
+*.sublime-project
+index.php
