@@ -11,4 +11,10 @@ define('DB_USER', $_ENV['DB_USER']);
 define('DB_PASSWORD', $_ENV['DB_PASSWORD']);
 define('DB_NAME', $_ENV['DB_NAME']);
 
+define('GOOGLE_CLIENT_ID', $_ENV['GOOGLE_CLIENT_ID']);
+define('GOOGLE_CLIENT_SECRET', $_ENV['GOOGLE_CLIENT_SECRET']);
+
+define('BASE_URL', 'http://localhost/users-payments-management-system/');
+define('OAUTH2_CALLBACK', 'api/oauth/callback.php');
+
 ?>
