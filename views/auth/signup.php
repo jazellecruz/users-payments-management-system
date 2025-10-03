@@ -4,11 +4,14 @@
   <meta charset="UTF-8">
   <title>Signup | JourneoLink</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
   <style>
     body {
       background: url('/users-payments-management-system/public/images/dreamstime_s_112555055.jpg') no-repeat center center;
       background-size: cover;
-      font-family: 'Intern', sans-serif;
+      font-family: "Outfit", sans-serif;
     }
     .card {
       backdrop-filter: blur(10px);
@@ -22,14 +25,12 @@
     }
     h3 {
       color: #000;
-      font-family: 'Inter', sans-serif;
       font-size: 24px;
       font-weight: 700;
       text-align: left;
     }
     .qc-tagline {
       color: #000;
-      font-family: 'Inter', sans-serif;
       font-size: 13px;
       font-weight: 300;
       text-align: left;
@@ -65,13 +66,13 @@
       <div class="col-12 col-lg-6 d-flex flex-column position-relative h-100 p-5">
         <div class="position-absolute top-0 start-0 m-3 ms-3 mt-5 d-flex align-items-center gap-0">
           <img src="/users-payments-management-system/public/images/image%204.png" style="height:32px;">
-          <span class="fw-bold" style="color:#3F562C; font-size:20px; font-family:Inter, sans-serif;">JourneoLink</span>
+          <span class="fw-bold" style="color:#3F562C; font-size:20px;">JourneoLink</span>
         </div>
 
         <div class="d-flex flex-column justify-content-center flex-grow-1">
           <h1 class="display-3 fw-bold mt-0 mb-0">Discover<br>Kyusi</h1>
-          <p class="h5 fw-bold mb-1 mt-4" style="font-family: 'Intern', sans-serif;">Where Every Street Holds A Story</p>
-          <p class="lead mb-1 fw-bold" style="font-family: 'Intern', sans-serif; color: #DCDCDC">
+          <p class="h5 fw-bold mb-1 mt-4">Where Every Street Holds A Story</p>
+          <p class="lead mb-1 fw-bold" style="color: #DCDCDC">
             Step Into A City Full Of Culture, Life, And<br>Endless Possibilities.
           </p>
         </div>
@@ -147,7 +148,7 @@
 
           <!-- Footer -->
           <div style="width: 80%; margin: 0 auto;">
-            <div class="text-center mt-0" style="font-family: Inter; font-size: 15px;">
+            <div class="text-center mt-0" style=" font-size: 15px;">
               Already part of the adventure?
               <a href="login.php" style="color:#000; font-weight:400; text-decoration:underline;">Log In</a>.
             </div>

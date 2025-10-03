@@ -31,7 +31,7 @@ CREATE TABLE admins (
 CREATE TABLE oauth_accounts (
     oauth_acc_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,    
-    provider_user_id VARCHAR(255) UNIQUE NOT NULL,
+    oauth_user_id VARCHAR(255) UNIQUE NOT NULL,
     provider ENUM('google', 'facebook') NOT NULL,
     access_token VARCHAR(255),
     refresh_token VARCHAR(255),
