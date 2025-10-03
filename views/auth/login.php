@@ -118,10 +118,13 @@
 
             <!-- Buttons -->
             <button type="submit" name="login" class="btn btn-brand w-100 mb-3">Log in with Email</button>
-            <button class="btn btn-outline-secondary w-100 mb-4 d-flex align-items-center justify-content-center">
-              <img src="/users-payments-management-system/public/images/image%203.png" style="width:21px; height:21px; margin-right:12px;">
-              <span style="font-weight:600;">Continue with Google</span>
-            </button>
+          </form>
+          <form action="../../api/oauth/auth.php" method="get" style="width: 80%; margin: 0 auto;">
+              <input type="hidden" name="role" value="basic">
+              <button type="submit" class="btn btn-outline-secondary w-100 mb-4 d-flex align-items-center justify-content-center">
+                <img src="/users-payments-management-system/public/images/image%203.png" style="width:21px; height:21px; margin-right:12px;">
+                <span style="font-weight:600;">Continue with Google</span>
+              </button>
           </form>
 
           <!-- Footer -->
