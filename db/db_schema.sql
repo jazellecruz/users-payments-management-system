@@ -12,6 +12,8 @@ CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(100) NOT NULL,
     password_hash VARCHAR(255),
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
     role ENUM('basic', 'driver', 'admin', 'bus_rep') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );  
