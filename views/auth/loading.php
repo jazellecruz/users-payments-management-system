@@ -22,18 +22,19 @@ if (isset($_POST['signup'])) {
 } else if (isset($_POST['login'])) {
     $email    = mysqli_real_escape_string($conn, $_POST['email']);
     $password = $_POST['password'];
+    $submitted_role = $_POST['role'] ?? '';
 
-    $sql = "SELECT * FROM users WHERE email='$email'";
+    $sql = "SELECT * FROM users WHERE email='$email' AND role='$submitted_role'";
     $result = mysqli_query($conn, $sql);
 
     if ($row = mysqli_fetch_assoc($result)) {
         if (password_verify($password, $row['password_hash'])) {
-            echo "Login successful! Welcome, " . $row['first_name'];
+            echo "Login successful! Welcome, " . $row['first_name'] . " (" . $row['role'] . "!).";
         } else {
             echo "Incorrect password.";
         }
     } else {
-        echo "Email not found.";
+        echo "Email or role not found.";
     }
 
 } else {
