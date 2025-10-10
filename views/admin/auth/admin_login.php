@@ -96,7 +96,7 @@
             <img src="/users-payments-management-system/public/images/jlinklogo.png" alt="JourneoLink Logo" class="logo">
             <h1 class="title">JourneoLink</h1>
             <h2 class="admin-title">JOURNEOLINK ADMINISTRATION</h2>
-            <p class="subtitle">Sign in with your credentials to access your business dashboard</p>
+            <p class="subtitle">Sign in with your credentials to access the admin dashboard.</p>
             <form method="POST" action="../../auth/loading.php">
                 <input type="hidden" name="login" value="1">
                 <input type="hidden" name="role" value="admin">
@@ -105,7 +105,7 @@
                 <label>Password</label>
                 <input type="password" name="password" placeholder="Password" required>
                 <button type="submit">LOG IN</button>
-                <a href="#" class="forgot-password">Forgot Password?</a>
+                <p class="subtitle" style="font-size: 13px; text-align: center; margin-top: 11px">Please contact administration incase you have forgotten your password.</p>
             </form>
         </div>
     </div>
