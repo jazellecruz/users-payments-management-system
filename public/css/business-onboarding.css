@@ -1,0 +1,126 @@
+:root {
+    --primary-color: #3F562C; /* Global variable */
+    --secondary-color: #988E42; /* Global variable */
+    --nav-bar-height: 50px;
+}
+
+body {
+    font-size: 13px;
+}
+
+.bg-brand-primary{
+    background-color: var(--primary-color);
+}
+
+.btn-brand-primary:hover {
+    background-color: #2c3b1fff;
+}
+
+#submitBtn:disabled {
+    background-color: grey !important;
+    border-color: grey !important;
+}
+
+.side-photo-container {
+    height: 100vh;
+    width: 25%;
+    object-fit: cover;
+    background-repeat: repeat; 
+    background-size: 300px  !important;
+    background: url('/users-payments-management-system/public/images/business-side-photo.jpg');
+}
+
+.swiper {
+    width: 100%;
+    height: 100vh; /* or any full container height */
+    overflow: hidden;
+}
+
+.swiper-slide{
+    width: 100% !important;
+    height: 100%;
+    display: block;
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+    overflow-y: auto;
+}
+.btn-brand-primary {
+    background-color: var(--primary-color);
+}
+
+.btn-brand-primary:hover {
+    background-color: #2c3b1fff;
+}
+
+.text-brand-secondary {
+    color:  var(--secondary-color);
+}
+.custom-input{
+    background-color: #F6F7FB;
+}
+.password-toggle-btn:hover {
+    cursor: pointer;
+}
+.text-brand-primary {
+    color: var(--primary-color);
+}
+.nav-title-bar{
+    padding: 20px 10px;
+    height: var(--nav-bar-height);
+    background-color: white;
+    position: fixed;
+    width: 100%;
+    height: var(--nav-bar-height);
+}
+.form-wrapper{
+    margin-top: var(--nav-bar-height);
+    overflow-y: auto;
+}
+.form-wrapper::-webkit-scrollbar{
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.preview-container, .bus-photo-review-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+.preview-item {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.remove-btn {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#map, #map-review {
+    height: 300px;
+    width: 100%;
+    border-radius: 8px;
+}

@@ -121,9 +121,11 @@ CREATE TABLE business_reps (
     middle_name VARCHAR(100),
     ext_name VARCHAR(10),
     birth_date DATE NOT NULL,
+    gender ENUM('male', 'female') NOT NULL,
     user_address VARCHAR(255) NOT NULL,
     active_phone_number CHAR(11) NOT NULL, 
     alternative_email VARCHAR(100),
+    valid_id_url VARCHAR(255) NOT NULL,
     is_disabled BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     disabled_at TIMESTAMP DEFAULT NULL,
@@ -134,7 +136,7 @@ CREATE TABLE business_reps (
 
 -- Roles of representatives are stored in business_reps table for simplicity.
 -- Enforces one representative per business profile.
-CREATE TABLE business_profile_applications (
+CREATE TABLE business_applications (
     business_application_id INT AUTO_INCREMENT PRIMARY KEY,
     public_business_application_id VARCHAR(50) NOT NULL UNIQUE,
     business_rep_id INT NOT NULL,
@@ -142,15 +144,20 @@ CREATE TABLE business_profile_applications (
     business_name VARCHAR(255) NOT NULL,
     business_desc TEXT NOT NULL,
     business_type_id INT NOT NULL,
-    business_location VARCHAR(255) NOT NULL,
+    business_contact_num VARCHAR(15) NOT NULL,
+    business_email VARCHAR(100) NOT NULL,
+    business_unit_number VARCHAR(50),
+    business_street VARCHAR(100) NOT NULL,
+    business_postal_code CHAR(10) NOT NULL,
+    business_city VARCHAR(100) NOT NULL,
+    business_province VARCHAR(100) NOT NULL,
+    business_country VARCHAR(100) NOT NULL,
     loc_lat DECIMAL(10, 8) NOT NULL,
     loc_long DECIMAL(11, 8) NOT NULL,
     application_status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     business_permit_url VARCHAR(255) NOT NULL,
     authorization_letter_url VARCHAR(255), -- nullable for business owners
-    proof_of_address_url VARCHAR(255) NOT NULL,
-    id_picture_url VARCHAR(255) NOT NULL,
     agreed_to_terms BOOLEAN DEFAULT FALSE,
     is_operating BOOLEAN DEFAULT FALSE,
     is_latest_approved BOOLEAN DEFAULT FALSE, 
@@ -171,7 +178,12 @@ CREATE TABLE business_profiles (
     business_name VARCHAR(255) NOT NULL,
     business_desc TEXT NOT NULL,
     business_type_id INT NOT NULL,
-    business_location VARCHAR(255) NOT NULL,
+    business_unit_number VARCHAR(50),
+    business_street VARCHAR(100) NOT NULL,
+    business_postal_code CHAR(10) NOT NULL,
+    business_city VARCHAR(100) NOT NULL,
+    business_province VARCHAR(100) NOT NULL,
+    business_country VARCHAR(100) NOT NULL,
     loc_lat DECIMAL(10, 8) NOT NULL, 
     loc_long DECIMAL(11, 8) NOT NULL,
     is_operating BOOLEAN DEFAULT FALSE,
@@ -184,6 +196,14 @@ CREATE TABLE business_profiles (
     FOREIGN KEY (business_rep_id) REFERENCES business_reps(business_rep_id),
     FOREIGN KEY (business_rep_role_id) REFERENCES business_rep_positions(business_rep_position_id),
     FOREIGN KEY (business_type_id) REFERENCES business_types(business_type_id),
-    FOREIGN KEY (active_application_id) REFERENCES business_profile_applications(business_application_id),
+    FOREIGN KEY (active_application_id) REFERENCES business_applications(business_application_id),
     FOREIGN KEY (disabled_by) REFERENCES admins(admin_id)
+);
+
+CREATE TABLE business_photos (
+    business_photo_id INT AUTO_INCREMENT PRIMARY KEY,
+    business_app_id INT NOT NULL,
+    photo_url VARCHAR(255) NOT NULL,
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (business_app_id) REFERENCES business_applications(business_application_id)
 );

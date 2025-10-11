@@ -17,4 +17,10 @@ define('GOOGLE_CLIENT_SECRET', $_ENV['GOOGLE_CLIENT_SECRET']);
 define('BASE_URL', 'http://localhost/users-payments-management-system/');
 define('OAUTH2_CALLBACK', 'api/oauth/callback.php');
 
+define('MEDIA_STORE_API_KEY', $_ENV['MEDIA_STORE_API_KEY']);
+define('MEDIA_STORE_NAME', $_ENV['MEDIA_STORE_NAME']);
+define('MEDIA_STORE_SECRET', $_ENV['MEDIA_STORE_SECRET']);
+
+define('EMAIL', $_ENV['EMAIL']);
+
 ?>

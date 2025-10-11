@@ -1,0 +1,48 @@
+
+body {
+    font-size: 13px;
+}
+.side-photo-container {
+    height: 100vh;
+    width: 23%;
+    object-fit: cover;
+    background-repeat: repeat; 
+    background-size: 300px  !important;
+    background: url('/users-payments-management-system/public/images/business-side-photo.jpg');
+    position: relative;
+    right: 0;
+}
+
+.sign-up-btn {
+    background-color: var(--primary-color);
+}
+
+.sign-up-btn:hover {
+    background-color: #2c3b1fff;
+}
+
+.text-brand-secondary {
+    color:  var(--secondary-color);
+}
+.custom-input{
+    background-color: #F6F7FB;
+}
+.password-toggle-btn:hover {
+    cursor: pointer;
+}
+
+.nav-title-bar{
+    padding: 20px 10px;
+    height: var(--onboarding-nav-bar-height);
+    background-color: white;
+    position: relative;
+    width: 100%;
+}
+.form-content-container{
+    height: calc(100vh - var(--onboarding-nav-bar-height));
+    max-width: 600px;
+}
+.form-control,  .input-group span{
+    height: 32px;
+    font-size: 14px;
+}
