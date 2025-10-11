@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+:root {
+    --primary-color: #3F562C; /* Global variable */
+    --secondary-color: #988E42; /* Global variable */
+    --onboarding-nav-bar-height: 50px;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+}
+
+.bg-brand-primary{
+    background-color: var(--primary-color);
+}
+
+.btn-brand-primary:hover {
+    background-color: #2c3b1fff;
+}
+
+.text-brand-primary {
+    color: var(--primary-color);
+}
+
+.text-brand-secondary {
+    color:  var(--secondary-color);
+}
+
+.bg-brand-primary:hover {
+    background-color: #2c3b1fff;
+}
