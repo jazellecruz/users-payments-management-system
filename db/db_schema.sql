@@ -14,6 +14,7 @@ CREATE TABLE users (
     password_hash VARCHAR(255),
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
+    acc_img_url VARCHAR(255) DEFAULT NULL,
     role ENUM('basic', 'driver', 'admin', 'bus_rep') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );  
