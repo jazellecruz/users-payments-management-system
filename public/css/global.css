@@ -26,6 +26,6 @@ body {
     color:  var(--secondary-color);
 }
 
-.bg-brand-primary:hover {
-    background-color: #2c3b1fff;
+.text-light-gray {
+    color: #e3e3e3;
 }
