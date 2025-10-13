@@ -171,9 +171,9 @@ CREATE TABLE business_applications (
 
 -- Longitude and Latitude are stored as DECIMAL instead of POINT 
 -- as it is much more straightforward to work with in application code.
-CREATE TABLE business_profiles (
-    business_profile_id INT AUTO_INCREMENT PRIMARY KEY,
-    public_profile_id VARCHAR(50) NOT NULL UNIQUE,
+CREATE TABLE businesses (
+    business_id INT AUTO_INCREMENT PRIMARY KEY,
+    public_business_id VARCHAR(50) NOT NULL UNIQUE,
     business_rep_id INT NOT NULL,
     business_rep_role_id INT NOT NULL,
     business_name VARCHAR(255) NOT NULL,
@@ -188,6 +188,7 @@ CREATE TABLE business_profiles (
     loc_lat DECIMAL(10, 8) NOT NULL, 
     loc_long DECIMAL(11, 8) NOT NULL,
     is_operating BOOLEAN DEFAULT FALSE,
+    business_profile_img VARCHAR(255) DEFAULT NULL,
     active_application_id INT NOT NULL,
     is_disabled BOOLEAN DEFAULT FALSE,
     disabled_at TIMESTAMP DEFAULT NULL, 
