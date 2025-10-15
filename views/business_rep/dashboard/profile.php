@@ -51,7 +51,13 @@
                 <!-- Hero section for profile -->
                 <div class="bg-white p-4 rounded mb-4 d-flex align-items-center gap-lg-4 gap-3 border border-light-gray">
                     <div class="avt-img-container">
-                        <img src="<?php echo $businessRep['profile_img_url']; ?>" class="rounded-circle border avatar" width="120" height="120" style="object-fit: cover;">
+                        <img 
+                            src="<?php echo $businessRep['profile_img_url'] ? $businessRep['profile_img_url'] : '../../../public/images/placeholder-avt.jpg'; ?>" 
+                            class="rounded-circle border avatar" 
+                            width="120" 
+                            height="120" 
+                            style="object-fit: cover;"
+                        >
                         <div class="edit-avatar-overlay rounded-circle">
                             <button class="btn btn-sm btn-success">
                                 <i class="bi bi-pencil-fill"></i> Edit
