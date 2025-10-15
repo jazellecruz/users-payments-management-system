@@ -32,8 +32,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $businessTypeId = sanitizeData($conn, $_POST['bus_type']);
         $businessContactNum = sanitizeData($conn, $_POST['business_contact_num']);
         $businessEmail = sanitizeData($conn, $_POST['business_email']);
-        $isBusinessOperating = $_POST["operating_cb"] ?? false;
-        $agreedToTerms = isset($_POST['terms_conds_checkbox']) == 'on' ? true : false;
+        $isBusinessOperating = $_POST['operating_cb'] ? 1 : 0;
+        $agreedToTerms = !empty($_POST['terms_conds_checkbox']) ?? false;
 
         // address of business 
         $busUnitNum = sanitizeData($conn, $_POST['bus_unit_number']);
@@ -66,10 +66,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $businessPhotos = [];
-
-        echo "<pre>";
-        print_r($_FILES['business_photos']['name']);
-        echo "</pre>";
 
         // populate business photos array
         for($i = 0; $i < count($_FILES['business_photos']['name']); $i++) {
@@ -167,6 +163,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'auth_letter_url' => isset($uploadedBusinessFiles['auth_letter']) ? $uploadedBusinessFiles['auth_letter']['url'] : null,
             ];
 
+        
             $conn->autocommit(false);
             $conn->begin_transaction();
 
