@@ -13,7 +13,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $res = updateBusinessApplicationStatus($conn, $applicationId, $status);
 
-        $redirectUrl = $_SERVER["PHP_SELF"];
+        // unsafe redirection :')
+        $redirectUrl = $_SERVER["HTTP_REFERER"];
 
         if($res) {
             redirectUser($redirectUrl);
