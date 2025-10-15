@@ -11,7 +11,7 @@
                 <div class="d-flex flex-column gap-4" style="list-style-type: none; padding: left 50px;">
                     <div class="d-flex flex-row align-items-center gap-2">
                         <i class="bi bi-file-earmark-text-fill ml-2"></i>
-                        <a class="nav-link fw-light text-light-gray" href="" style="">My Applications</a>
+                        <a class="nav-link fw-light text-light-gray" href="applications.php" style="">My Applications</a>
                     </div>
                     <div class="d-flex flex-row align-items-center gap-2">
                         <i class="bi  bi-building-fill ml-2"></i>
@@ -19,7 +19,7 @@
                     </div>
                     <div class="d-flex flex-row align-items-center gap-2">
                         <i class="bi bi-person-fill  ml-2"></i>
-                        <a class="nav-link fw-light text-light-gray" href="" style="">My Profile</a>
+                        <a class="nav-link fw-light text-light-gray" href="profile.php" style="">My Profile</a>
                     </div>
                 </div>
             </div>

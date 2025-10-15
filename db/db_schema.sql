@@ -129,6 +129,7 @@ CREATE TABLE business_reps (
     active_phone_number CHAR(11) NOT NULL, 
     alternative_email VARCHAR(100),
     valid_id_url VARCHAR(255) NOT NULL,
+    profile_img_url VARCHAR(255) DEFAULT NULL,
     is_disabled BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     disabled_at TIMESTAMP DEFAULT NULL,
