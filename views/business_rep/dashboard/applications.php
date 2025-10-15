@@ -49,7 +49,6 @@
     <style>
         body {
             background-color: #f3f4f5ff;
-            font-size: 14px;
         }
 
         label {
