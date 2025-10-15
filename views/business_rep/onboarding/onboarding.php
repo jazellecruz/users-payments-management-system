@@ -46,7 +46,7 @@ $businessTypes = getAllBusinessTypes($conn);
             <div class="nav-title-bar d-flex justify-content-start align-items-center">
                 <div class="d-flex flex-row align-items-center">
                     <img src="/users-payments-management-system/public/images/image 4.png"  height="30">
-                    <span class=" fs-5 fw-bold text-brand-primary">Journeolink<span class="text-brand-secondary">Drivers</span></span>
+                    <span class=" fs-5 fw-bold text-brand-primary">Journeolink <span class="text-brand-secondary">Business</span></span>
                 </div>
             </div>
         </div>
@@ -232,7 +232,7 @@ $businessTypes = getAllBusinessTypes($conn);
                                 </div>
                                 <div id="preview" class="preview-container"></div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input data-input" type="checkbox" id="terms_conds_checkbox" data-target="terms_conds_checkbox_review">
+                                    <input class="form-check-input data-input" type="checkbox" name="terms_conds_checkbox" id="terms_conds_checkbox" data-target="terms_conds_checkbox_review">
                                     <span class="" for="terms_conds_checkbox">I accept the 
                                         <a class="text-underline text-brand-secondary pe-auto" data-bs-toggle="modal" data-bs-target="#terms-conditions-modal">Terms and Conditions</a> 
                                         and consent to the use of my data for verification purposes.</span>

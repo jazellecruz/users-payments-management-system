@@ -28,9 +28,27 @@
             <div class="border-bottom border-secondary my-3"></div>
             <div>
                 <ul class="pl-3 d-flex flex-column gap-2" style="list-style-type: none;">
-                    <li><a class="nav-link d-flex gap-2" href="" style=""><i class="bi bi-power mr-2"></i><span class="text-light-gray">Log Out</span></a></li>
+                    <li class=""><button class="d-flex gap-2 text-white bg-transparent border-0 p-0" data-bs-toggle="modal" data-bs-target="#confirmLogoutModal"><i class="bi bi-power mr-2"></i><span class="text-light-gray">Log Out</span></button></li>
                 </ul>
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="confirmLogoutModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title fw-bold">CONFIRM ACTION</h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to log out?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+        <a type="button" href="../../../api/auth/logout.php" class="btn btn-danger btn-sm">Log Out</a>
+      </div>
+    </div>
+  </div>
 </div>

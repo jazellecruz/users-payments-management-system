@@ -40,7 +40,7 @@
                 <a href="#" role="button" class="btn btn-sm btn-secondary">
                     Go Home
                 </a>
-                <a href="#" role="button" class="btn btn-sm text-white bg-brand-primary btn-brand-primary">
+                <a href="../dashboard/applications.php" role="button" class="btn btn-sm text-white bg-brand-primary btn-brand-primary">
                     Proceed to Dashboard
                 </a>
             </div>
