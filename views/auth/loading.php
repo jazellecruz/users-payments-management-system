@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../utils/utils.php';
 require_once __DIR__ . '/../../db/db_conn.php';
+require_once __DIR__ . '/../../utils/auth.php';
 
 session_start();
 $MAX_RETRIES = 5;
@@ -56,7 +57,7 @@ if (isset($_POST['signup'])) {
         exit;
     }
 
-    $stmt = $conn->prepare("SELECT user_id, first_name, email, password_hash, role FROM users WHERE email = ? AND role = ?");
+    $stmt = $conn->prepare("SELECT user_id, first_name, last_name, email, password_hash, role FROM users WHERE email = ? AND role = ?");
     $stmt->bind_param('ss', $email, $role);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -64,36 +65,53 @@ if (isset($_POST['signup'])) {
     if ($row = $result->fetch_assoc()) {
         if (verifyPassword($password, $row['password_hash'])) {
             $_SESSION['user_id'] = $row['user_id'];
+            $_SESSION['first_name'] = $row['first_name'];
+            $_SESSION['last_name'] = $row['last_name'];
             $_SESSION['email'] = $row['email'];
             $_SESSION['role'] = $row['role'];
             $_SESSION['first_name'] = $row['first_name'];
 
 
-            if ($row['role'] === 'driver') {
-            $driverStmt = $conn->prepare("SELECT driver_id FROM drivers WHERE user_id = ?");
-            $driverStmt->bind_param('i', $row['user_id']);
-            $driverStmt->execute();
-            $driverResult = $driverStmt->get_result();
+            if ($row['role'] === 'bus_rep') {
+                redirectUser('../business_rep/dashboard/applications.php');
+                exit();
+            } 
 
-            if ($driverRow = $driverResult->fetch_assoc()) {
-                $_SESSION['driverId'] = $driverRow['driver_id'];
-                header("Location: ../driver/auth/driver_dashboard_pending.php");
-                exit;
-            } else {
-                echo "❌ Driver profile not found.";
+            if ($row['role'] === 'driver') {
+                $driverStmt = $conn->prepare("SELECT driver_id FROM drivers WHERE user_id = ?");
+                $driverStmt->bind_param('i', $row['user_id']);
+                $driverStmt->execute();
+                $driverResult = $driverStmt->get_result();
+
+                if ($driverRow = $driverResult->fetch_assoc()) {
+                    $_SESSION['driverId'] = $driverRow['driver_id'];
+                    // redirect driver to their driver dashboard
+                    echo "Redirecting to driver dashboard...";
+                    exit();
+                } else {
+                    // redirect driver to a different dashboard if unverified
+                    redirectUser('../driver/dashboard/applications.php');
+                    exit();
+                }
             }
 
-            $driverStmt->close();
-            echo "✅ Login successful! Welcome, " . htmlspecialchars($row['first_name']) . " (" . $row['role'] . ")";
+            if ($row['role'] === 'admin') {
+                redirectUser('../admin/dashboard/index.php');
+                exit();
+            }
+
+            if ($row['role'] === 'basic') {
+                echo "Login Successful. Redirecting to journeolink homepage...";
+                exit();
+            }
         } else {
             echo "❌ Incorrect password.";
         }
     } else {
         echo "❌ Email or role not found.";
     }
-    }
+    
     $stmt->close();
-
 } else {
     echo "⚠️ Invalid action.";
 }

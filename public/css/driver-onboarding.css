@@ -1,0 +1,62 @@
+body {
+    font-size: 13px;
+}
+
+#submitBtn:disabled {
+    background-color: grey !important;
+    border-color: grey !important;
+}
+
+.side-photo-container {
+    height: 100vh;
+    width: 23%;
+    object-fit: cover;
+    background-repeat: repeat; 
+    background-size: 500px  !important;
+    background: url('/users-payments-management-system/public/images/driver-side-photo.jpg');
+    position: relative;
+    right: 0;
+}
+
+.form-swiper {
+    width: 80% !important;
+}
+
+.swiper-slide::-webkit-scrollbar {
+    display: none;
+}
+
+.swiper-slide{
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+}
+
+.swiper-slide {
+    height: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+    display: block;
+}
+
+.custom-input{
+    background-color: #F6F7FB;
+}
+.password-toggle-btn:hover {
+    cursor: pointer;
+}
+
+.nav-title-bar{
+    padding: 20px 10px;
+    height: var(--onboarding-nav-bar-height);
+    background-color: white;
+    position: fixed;
+    width: 100%;
+    height: var(--onboarding-nav-bar-height);
+}
+.form-content-container{
+    height: calc(100vh - var(--onboarding-nav-bar-height));
+}
+
+.main-content-wrapper {
+    margin-top: var(--onboarding-nav-bar-height);
+}

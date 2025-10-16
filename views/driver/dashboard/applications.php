@@ -1,12 +1,15 @@
 <?php
 session_start();
 
+require_once '../../../db/db_conn.php';
+
+$conn = getDbConnection();
+
 if (!isset($_SESSION['user_id'])) {
   header("Location: driver_login.php");
   exit;
 }
 
-$conn = new mysqli("localhost", "root", "", "user_payment_db");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -67,7 +70,7 @@ $userName = $_SESSION['first_name'] ?? 'User';
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
         <li><h6 class="dropdown-header">Welcome, <?= htmlspecialchars($userName) ?></h6></li>
         <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item text-danger" href="driver_login.php">Sign Out</a></li>
+        <li><a class="dropdown-item text-danger" href="../../../api/auth/logout.php">Sign Out</a></li>
       </ul>
     </div>
   </div>
@@ -207,7 +210,7 @@ $result = $conn->query($query);
   <?php if ($result && $result->num_rows > 0): ?>
     <?php while ($row = $result->fetch_assoc()):
       $status = $row['status'];
-      $badgeClass = $status === 'pending' ? 'bg-warning text-dark' : ($status === 'rejected' ? 'bg-danger' : 'bg-success');
+      $badgeClass = $status === 'pending' ? 'bg-warning text-dark' : ($status === 'rejected' ? 'bg-danger' : ($status === 'cancelled' ? 'bg-secondary' : 'bg-success'));
       $remarks = '-';
     ?>
       <tr>
@@ -400,7 +403,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (!confirm('Are you sure you want to cancel this application?')) return;
 
-  fetch('cancel_application.php', {
+  fetch('../auth/cancel_application.php', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: 'id=' + encodeURIComponent(appId)

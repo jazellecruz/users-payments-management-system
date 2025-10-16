@@ -28,5 +28,12 @@ function getUserAccByEmail($conn, $email) {
     return $result->fetch_assoc();
 }
 
+function getUserByEmailAndRole($conn, $email, $role) {
+    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? AND role = ?");
+    $stmt->bind_param("ss", $email, $role);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_assoc();
+}
 
 ?>

@@ -97,7 +97,7 @@
             <img src="/users-payments-management-system/public/images/jlinklogo.png" alt="JourneoLink Logo" class="logo">
             <h1 class="title">JourneoLink</h1>
             <h2 class="admin-title">JOURNEOLINK DRIVER</h2>
-            <p class="subtitle">Sign in with your credentials to access your business dashboard</p>
+            <p class="subtitle">Sign in with your credentials to access your dashboard.</p>
             <form method="POST" action="../../auth/loading.php">
                 <input type="hidden" name="login" value="1">
                 <input type="hidden" name="role" value="driver">
