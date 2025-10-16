@@ -57,7 +57,7 @@ if (isset($_POST['signup'])) {
         exit;
     }
 
-    $stmt = $conn->prepare("SELECT user_id, first_name, last_name, email, password_hash, role FROM users WHERE email = ? AND role = ?");
+    $stmt = $conn->prepare("SELECT user_id, first_name, last_name, email, password_hash, acc_img_url, role FROM users WHERE email = ? AND role = ?");
     $stmt->bind_param('ss', $email, $role);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -70,6 +70,7 @@ if (isset($_POST['signup'])) {
             $_SESSION['email'] = $row['email'];
             $_SESSION['role'] = $row['role'];
             $_SESSION['first_name'] = $row['first_name'];
+            $_SESSION['acc_img_url'] = $row['acc_img_url'];
 
 
             if ($row['role'] === 'bus_rep') {

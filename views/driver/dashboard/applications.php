@@ -2,11 +2,12 @@
 session_start();
 
 require_once '../../../db/db_conn.php';
+require_once '../../../utils/auth.php';
 
 $conn = getDbConnection();
 
 if (!isset($_SESSION['user_id'])) {
-  header("Location: driver_login.php");
+  redirectUser('../auth/driver_login.php');
   exit;
 }
 
