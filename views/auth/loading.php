@@ -66,6 +66,24 @@ if (isset($_POST['signup'])) {
             $_SESSION['user_id'] = $row['user_id'];
             $_SESSION['email'] = $row['email'];
             $_SESSION['role'] = $row['role'];
+            $_SESSION['first_name'] = $row['first_name'];
+
+
+            if ($row['role'] === 'driver') {
+            $driverStmt = $conn->prepare("SELECT driver_id FROM drivers WHERE user_id = ?");
+            $driverStmt->bind_param('i', $row['user_id']);
+            $driverStmt->execute();
+            $driverResult = $driverStmt->get_result();
+
+            if ($driverRow = $driverResult->fetch_assoc()) {
+                $_SESSION['driverId'] = $driverRow['driver_id'];
+                header("Location: ../driver/auth/driver_dashboard_pending.php");
+                exit;
+            } else {
+                echo "❌ Driver profile not found.";
+            }
+
+            $driverStmt->close();
             echo "✅ Login successful! Welcome, " . htmlspecialchars($row['first_name']) . " (" . $row['role'] . ")";
         } else {
             echo "❌ Incorrect password.";
@@ -73,7 +91,7 @@ if (isset($_POST['signup'])) {
     } else {
         echo "❌ Email or role not found.";
     }
-
+    }
     $stmt->close();
 
 } else {
