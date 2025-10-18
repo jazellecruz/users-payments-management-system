@@ -48,9 +48,9 @@ if (isset($_POST['signup'])) {
     $stmt->close();
 
 } else if (isset($_POST['login'])) {
-    $email    = mysqli_real_escape_string($conn, $_POST['email'] ?? '');
-    $password = $_POST['password'] ?? '';
-    $role     = $_POST['role'] ?? '';
+    $email    = mysqli_real_escape_string($conn, $_POST['email']);
+    $password = $_POST['password'];
+    $role     = $_POST['role'];
 
     if ($email === '' || $password === '') {
         echo "⚠️ Missing email or password.";
@@ -61,8 +61,9 @@ if (isset($_POST['signup'])) {
     $stmt->bind_param('ss', $email, $role);
     $stmt->execute();
     $result = $stmt->get_result();
-
+    
     if ($row = $result->fetch_assoc()) {
+        
         if (verifyPassword($password, $row['password_hash'])) {
             $_SESSION['user_id'] = $row['user_id'];
             $_SESSION['first_name'] = $row['first_name'];

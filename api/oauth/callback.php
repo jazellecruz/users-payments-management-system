@@ -94,10 +94,12 @@ if($_GET['code'] && $_GET['state'] === $_SESSION['oauth2state']) {
         }        
 
     }
+    echo "User is successfully authenticated using Google. Redirecting to maps page...";
+    exit;
 
-    $redirectUrl = BASE_URL . "/redirect.php";
-    generateSession($user, $roleProfile);
-    redirectUser($redirectUrl);
+    // $redirectUrl = BASE_URL . "/redirect.php";
+    // generateSession($user, $roleProfile);
+    // redirectUser($redirectUrl);
 
 } else {
     // if auth code is missing and session state is invalid 

@@ -115,7 +115,7 @@
                 <a href="login.php" style="color:#000; font-weight:400; text-decoration:underline;">Forgot password?</a>
               </div>
             </div>
-
+            <input type="hidden" name="role" value="basic">
             <!-- Buttons -->
             <button type="submit" name="login" class="btn btn-brand w-100 mb-3">Log in with Email</button>
           </form>
