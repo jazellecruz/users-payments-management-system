@@ -160,7 +160,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'loc_long' => $long,
                 'loc_lat' => $lat,
                 'business_permit_url' => $uploadedBusinessFiles['business_permit']['url'],
-                'auth_letter_url' => isset($uploadedBusinessFiles['auth_letter']) ? $uploadedBusinessFiles['auth_letter']['url'] : null,
+                'authorization_letter_url' => isset($uploadedBusinessFiles['auth_letter']) ? $uploadedBusinessFiles['auth_letter']['url'] : null,
             ];
 
         
@@ -180,7 +180,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             foreach ($uploadedBusinessPhotos as $photo) {
                 $photo['business_app_id'] = $businessAppId;
                 $photo['photo_url'] = $photo['url'];
-                createBusinessPhotos($conn, $photo);
+                $photo['public_photo_id'] = $photo['public_id'];
+                createBusinessAppPhotos($conn, $photo);
             }
 
             // commit transaction
