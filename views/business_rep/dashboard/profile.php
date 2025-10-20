@@ -59,7 +59,7 @@
                             style="object-fit: cover;"
                         >
                         <div class="edit-avatar-overlay rounded-circle">
-                            <button class="btn btn-sm btn-success">
+                            <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#editProfileModal">
                                 <i class="bi bi-pencil-fill"></i> Edit
                             </button>
                         </div>
@@ -69,11 +69,70 @@
                         <p class="text-muted p-0 m-0"><?php echo $userEmail; ?></p>
                     </div>
                 </div>  
+                <!-- Edit avatar modal -->
+                <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form action="../../../api/business/profile.php" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="user_id" value="<?php echo $userId; ?>">
+                            <input type="hidden" name="business_rep_id" value="<?php echo $businessRep['business_rep_id']; ?>">
+                            <input type="text" name="action" value="edit_profile_image" hidden>
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title fs-5" id="editProfileModalLabel">Edit Business Representative Image</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                      <?php 
+                                        $lastSlashPos = strrchr($businessRep['profile_img_url'], '/'); 
+                                        $imgFileName = substr($lastSlashPos, 1);
+                                    ?>
+                                    <img 
+                                        src="<?php echo $businessRep['profile_img_url'] ? $businessRep['profile_img_url'] : '../../../public/images/placeholder-avt.jpg'; ?>" 
+                                        class="rounded-circle border avatar mx-auto mb-3" 
+                                        width="120" 
+                                        height="120" 
+                                        style="object-fit: cover;"
+                                        id="previewProfileImgEdit"
+                                    >
+                                    <label for="profile_image" class="form-label">Profile Image</label>
+                                    <input class="form-control form-control-sm" type="file" name="profile_image" id="profile_image" 
+                                        value=""
+                                        placeholder="<?php echo $imgFileName; ?>"
+                                    >
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-brand-primary bg-brand-primary text-white btn-sm">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded mb-4 border border-light-gray">
+                    <div class="d-flex justify-content-between align-items-center mb-3 p-3 border-bottom border-light-gray">
+                        <p class="fw-bold fs-5 text-brand-primary mb-0 pb-0">Business Representative Information</p>
+                    </div>
+                    <div class="px-3 pb-3">
+                        <div class="d-flex flex-column gap-4">
+                            <div class="d-flex flex-column gap-2 flex-md-row pb-3">
+                                <div class="w-100">
+                                    <label class="form-label text-muted">Business Representative Identification</label>
+                                    <input class="form-control form-control-sm" type="text" value="<?php echo $businessRep['public_business_rep_id']; ?>" readonly>
+                                </div>
+                                <div class="w-100">
+                                    <label class="form-label text-muted">Joined At</label>
+                                    <input class="form-control form-control-sm" type="text" value="<?php echo date('M j, Y, D h:i A', strtotime($businessRep['created_at'])); ?>" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="bg-white rounded mb-4 border border-light-gray">
                     <div class="d-flex justify-content-between align-items-center mb-3 p-3 border-bottom border-light-gray">
                         <p class="fw-bold fs-5 text-brand-primary mb-0 pb-0">Personal Information</p>
-                        <button class="btn btn-sm btn-warning px-4 text-white">Edit</button>
+                        <button type="button" class="btn btn-sm btn-warning px-4 text-white" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
                     </div>
                     <div class="px-3 pb-3">
                         <div class="d-flex flex-column gap-4">
@@ -114,27 +173,6 @@
                                 <input class="form-control form-control-sm" type="text" value="<?php echo $businessRep['user_address']; ?>" readonly>
                             </div>
                         </div>
-                    </div>
-                </div>  
-
-                <div class="bg-white rounded mb-4 border border-light-gray">
-                    <div class="d-flex justify-content-between align-items-center mb-3 p-3 border-bottom border-light-gray">
-                        <p class="fw-bold fs-5 text-brand-primary mb-0 pb-0">Business Representative Information</p>
-                        <button class="btn btn-sm btn-warning px-4 text-white">Edit</button>
-                    </div>
-                    <div class="px-3 pb-3">
-                        <div class="d-flex flex-column gap-4">
-                            <div class="d-flex flex-column gap-2 flex-md-row pb-3">
-                                <div class="w-100">
-                                    <label class="form-label text-muted">Business Representative Identification</label>
-                                    <input class="form-control form-control-sm" type="text" value="<?php echo $businessRep['public_business_rep_id']; ?>" readonly>
-                                </div>
-                                <div class="w-100">
-                                    <label class="form-label text-muted">Joined At</label>
-                                    <input class="form-control form-control-sm" type="text" value="<?php echo date('M j, Y, D h:i A', strtotime($businessRep['created_at'])); ?>" readonly>
-                                </div>
-                            </div>
-                        </div>
                         <div class="d-flex flex-column gap-4 pb-3">
                             <div class="d-flex flex-column gap-2 flex-md-row">
                                 <div class="w-100">
@@ -165,10 +203,89 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                    <!-- Edit Modal -->
+                    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form action="../../../api/business/profile.php" method="POST">
+                                <input type="hidden" name="action" value="edit_personal_info">
+                                <input type="hidden" name="business_rep_id" value="<?php echo $businessRep['business_rep_id']; ?>">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editModalLabel">Edit Personal Information</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="w-100 pb-2">
+                                        <label class="form-label text-muted">First Name</label>
+                                        <input name="first_name" class="form-control form-control-sm" type="text" value="<?php echo $businessRep['first_name']; ?>">
+                                    </div>
+                                    <div class="w-100 pb-2">
+                                        <label class="form-label text-muted">Last Name</label>
+                                        <input name="last_name" class="form-control form-control-sm" type="text" value="<?php echo $businessRep['last_name']; ?>">
+                                    </div>
+                                    <div class="w-100 pb-2">
+                                        <label class="form-label text-muted">Middle Name</label>
+                                        <input name="middle_name" class="form-control form-control-sm" type="text" value="<?php echo $businessRep['middle_name']; ?>">
+                                    </div>
+                                    <div class="w-100 pb-2">
+                                        <label class="form-label text-muted">Name Extension</label>
+                                        <input name="ext_name" class="form-control form-control-sm" type="text" value="<?php echo $businessRep['ext_name']; ?>">
+                                    </div>
+                                    <div class="w-100 pb-2">
+                                        <label class="form-label text-muted">Birthdate</label>
+                                        <input name="birth_date" class="form-control form-control-sm" type="date" value="<?php echo date('Y-m-d', strtotime($businessRep['birth_date'])); ?>">
+                                    </div>
+                                    <div class="w-100 pb-2">
+                                        <label class="form-label text-muted">Gender</label>
+                                        <select name="gender" class="form-select form-select-sm" id="gender">
+                                            <option value="male" <?php echo ($businessRep['gender'] == 'male') ? 'selected' : ''; ?>>Male</option>
+                                            <option value="female" <?php echo ($businessRep['gender'] == 'female') ? 'selected' : ''; ?>>Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="w-100 pb-2">
+                                        <label class="form-label text-muted">Address</label>
+                                        <input name="address" class="form-control form-control-sm" type="text" value="<?php echo $businessRep['user_address']; ?>">
+                                    </div>
+                                    <div class="d-flex flex-column gap-2 flex-md-row">
+                                        <div class="w-100 pb-2">
+                                            <label class="form-label text-muted">Contact Number</label>
+                                            <input name="contact_num" class="form-control form-control-sm" type="text" value="<?php echo $businessRep['active_phone_number']; ?>">
+                                        </div>
+                                        <div class="w-100 pb-2">
+                                            <label class="form-label text-muted">Alternative Email</label>
+                                            <input name="alt_email" class="form-control form-control-sm" type="text" value="<?php echo $businessRep['alternative_email']; ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-brand-primary bg-brand-primary text-white btn-sm">Save</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
             </div>
         </div>
     </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script> 
+    <script>
+        // Preview selected profile image before upload
+        const profileImageInput = document.getElementById('profile_image');
+        const previewProfileImgEdit = document.getElementById('previewProfileImgEdit');
+
+        profileImageInput.addEventListener('change', function(e) {
+            console.log(e.target.result);
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewProfileImgEdit.setAttribute('src', e.target.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        }); 
+    </script>
 </body>
 </html>

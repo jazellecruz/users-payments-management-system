@@ -91,6 +91,13 @@ CREATE TABLE drivers (
     user_address VARCHAR(255) NOT NULL,
     active_phone_number CHAR(11) NOT NULL, 
     alternative_email VARCHAR(100),
+    license_number VARCHAR(50) NOT NULL,
+    license_expiry_date DATE NOT NULL,
+    license_img_url VARCHAR(255) NOT NULL,
+    proof_of_address_img_url VARCHAR(255) NOT NULL,
+    nbi_clearance_img_url VARCHAR(255) NOT NULL,
+    id_pic_img_url VARCHAR(255) NOT NULL,
+    agreed_to_terms BOOLEAN DEFAULT FALSE,
     joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     is_disabled BOOLEAN DEFAULT FALSE,
     disabled_at TIMESTAMP DEFAULT NULL,
@@ -181,10 +188,12 @@ CREATE TABLE businesses (
     business_id INT AUTO_INCREMENT PRIMARY KEY,
     public_business_id VARCHAR(50) NOT NULL UNIQUE,
     business_rep_id INT NOT NULL,
-    business_rep_role_id INT NOT NULL,
+    business_rep_position_id INT NOT NULL,
     business_name VARCHAR(255) NOT NULL,
     business_desc TEXT NOT NULL,
     business_type_id INT NOT NULL,
+    business_contact_num VARCHAR(15) NOT NULL,
+    business_email VARCHAR(100) NOT NULL,
     business_unit_number VARCHAR(50),
     business_street VARCHAR(100) NOT NULL,
     business_postal_code CHAR(10) NOT NULL,
@@ -195,6 +204,9 @@ CREATE TABLE businesses (
     loc_long DECIMAL(11, 8) NOT NULL,
     is_operating BOOLEAN DEFAULT FALSE,
     business_profile_img VARCHAR(255) DEFAULT NULL,
+    business_permit_url VARCHAR(255) NOT NULL,
+    authorization_letter_url VARCHAR(255), -- nullable for business owners
+    agreed_to_terms BOOLEAN DEFAULT FALSE,
     active_application_id INT NOT NULL,
     is_disabled BOOLEAN DEFAULT FALSE,
     disabled_at TIMESTAMP DEFAULT NULL, 
@@ -202,7 +214,7 @@ CREATE TABLE businesses (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (business_rep_id) REFERENCES business_reps(business_rep_id),
-    FOREIGN KEY (business_rep_role_id) REFERENCES business_rep_positions(business_rep_position_id),
+    FOREIGN KEY (business_rep_position_id) REFERENCES business_rep_positions(business_rep_position_id),
     FOREIGN KEY (business_type_id) REFERENCES business_types(business_type_id),
     FOREIGN KEY (active_application_id) REFERENCES business_applications(business_application_id),
     FOREIGN KEY (disabled_by) REFERENCES admins(admin_id)
@@ -210,7 +222,17 @@ CREATE TABLE businesses (
 
 CREATE TABLE business_photos (
     business_photo_id INT AUTO_INCREMENT PRIMARY KEY,
+    business_id INT NOT NULL,
+    public_id VARCHAR(100),
+    photo_url VARCHAR(255) NOT NULL,
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (business_id) REFERENCES businesses(business_id)
+);
+
+CREATE TABLE business_app_photos (
+    business_photo_id INT AUTO_INCREMENT PRIMARY KEY,
     business_app_id INT NOT NULL,
+    public_id VARCHAR(100),
     photo_url VARCHAR(255) NOT NULL,
     uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (business_app_id) REFERENCES business_applications(business_application_id)

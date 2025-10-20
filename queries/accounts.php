@@ -36,4 +36,16 @@ function getUserByEmailAndRole($conn, $email, $role) {
     return $result->fetch_assoc();
 }
 
+function updateUserProfileImg($conn, $userId, $newImgUrl) {
+    $stmt = $conn->prepare("UPDATE users SET acc_img_url = ? WHERE user_id = ?");
+    $stmt->bind_param("si", $newImgUrl, $userId);
+    return $stmt->execute();
+}
+
+function updateUserInfo($conn, $userId, $data) {
+    $stmt = $conn->prepare("UPDATE users SET first_name = ?, last_name = ? WHERE user_id = ?");
+    $stmt->bind_param("ssi", $data['first_name'], $data['last_name'], $userId);
+    return $stmt->execute();
+}
+
 ?>

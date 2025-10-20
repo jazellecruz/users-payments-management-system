@@ -82,4 +82,12 @@ function generateUniqueFileName($file){
     return $name . '-' . generateNanoId(18) . ($fileTypeExtensions[$extension] ?? 'bin');
 }
 
+function maskEmail($email) {
+    $charPos = strpos($email, '@');
+    $cut = substr($email, 0, $charPos);
+    $cutoffLength = strlen(substr($email, 0, $charPos)) - 3;
+    $maskedEmail = substr($email, 0, 3) . str_repeat('*', $cutoffLength) . substr($email, $charPos);
+    return $maskedEmail;
+}
+
 ?>

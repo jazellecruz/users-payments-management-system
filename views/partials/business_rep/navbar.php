@@ -1,8 +1,8 @@
 <?php
 
-$adminName = isset($_SESSION['first_name']) && isset($_SESSION['last_name']) ? $_SESSION['first_name'] . ' ' . $_SESSION['last_name'] : ' User Name';
-$adminEmail = isset($_SESSION['email']) ? $_SESSION['email'] : 'user@email.com';
-$adminAvatar = isset($_SESSION['avatar']) ? $_SESSION['avatar'] : 'http://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png';
+$name = isset($_SESSION['first_name']) && isset($_SESSION['last_name']) ? $_SESSION['first_name'] . ' ' . $_SESSION['last_name'] : ' User Name';
+$email = isset($_SESSION['email']) ? $_SESSION['email'] : 'user@email.com';
+$avatar = isset($_SESSION['acc_img_url']) ? $_SESSION['acc_img_url'] : 'http://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png';
 
 ?>
 
@@ -19,10 +19,10 @@ $adminAvatar = isset($_SESSION['avatar']) ? $_SESSION['avatar'] : 'http://upload
     </div>
     <div class="d-flex align-items-center">
         <div class="me-3 text-end">
-            <p class="mb-0 fw-semibold"><?php echo $adminName; ?></p>
-            <p class="mb-0 text-muted small"><?php echo $adminEmail; ?></p>
+            <p class="mb-0 fw-semibold"><?php echo $name; ?></p>
+            <p class="mb-0 text-muted small"><?php echo $email; ?></p>
         </div>
-        <img src="<?php echo $adminAvatar; ?>" alt="Profile Avatar" class="rounded-circle border" width="40" height="40" style="object-fit: cover;"> 
+        <img src="<?php echo $avatar; ?>" alt="Profile Avatar" class="rounded-circle border" width="40" height="40" style="object-fit: cover;"> 
     </div>
   </div>
 </nav>
@@ -43,15 +43,19 @@ $adminAvatar = isset($_SESSION['avatar']) ? $_SESSION['avatar'] : 'http://upload
                 <div class="d-flex flex-column gap-4" style="list-style-type: none; padding: left 50px;">
                     <div class="d-flex flex-row align-items-center gap-2">
                         <i class="bi bi-file-earmark-text-fill ml-2"></i>
-                        <a class="nav-link fw-light text-light-gray" href="" style="">My Applications</a>
+                        <a class="nav-link fw-light text-light-gray" href="applications.php" style="">My Applications</a>
                     </div>
                     <div class="d-flex flex-row align-items-center gap-2">
                         <i class="bi  bi-building-fill ml-2"></i>
-                        <a class="nav-link fw-light text-light-gray" href="" style="">My Businesses</a>
+                        <a class="nav-link fw-light text-light-gray" href="businesses.php" style="">My Businesses</a>
                     </div>
                     <div class="d-flex flex-row align-items-center gap-2">
-                        <i class="bi bi-person-fill  ml-2"></i>
-                        <a class="nav-link fw-light text-light-gray" href="" style="">My Profile</a>
+                        <i class="bi bi-person-badge-fill ml-2"></i>
+                        <a class="nav-link fw-light text-light-gray" href="profile.php" style="">My Profile</a>
+                    </div>
+                    <div class="d-flex flex-row align-items-center gap-2">
+                        <i class="bi bi-person-fill-gear  ml-2"></i>
+                        <a class="nav-link fw-light text-light-gray" href="account.php" style="">My Account</a>
                     </div>
                 </div>
             </div>

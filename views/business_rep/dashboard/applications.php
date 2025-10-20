@@ -268,7 +268,7 @@
                                                                     readonly
                                                                     disabled
                                                                     >
-                                                                <span>
+                                                                <span  class="small">
                                                                     Yes, the business is currently operating.
                                                                 </span>
                                                             </div>
@@ -280,7 +280,7 @@
                                                                     <?php echo !$application['is_operating'] ? 'checked' : ''; ?>
                                                                     disabled
                                                                 >
-                                                                <span >
+                                                                <span class="small">
                                                                     No, the business is not currently operating.
                                                                 </span>
                                                             </div>
@@ -336,7 +336,7 @@
                                                                     <?php echo $application['agreed_to_terms'] ? 'checked' : ''; ?>
                                                                     disabled
                                                                     >
-                                                                <span>
+                                                                <span class="small">
                                                                     Yes, I have read and accepted the terms and conditions.
                                                                 </span>
                                                             </div>
@@ -348,7 +348,7 @@
                                                                     <?php echo !$application['agreed_to_terms'] ? 'checked' : ''; ?>
                                                                     disabled
                                                                 >
-                                                                <span >
+                                                                <span class="small">
                                                                     No, I have not read and accepted the terms and conditions.
                                                                 </span>
                                                             </div>
