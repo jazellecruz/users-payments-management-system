@@ -1,4 +1,7 @@
 <?php
+$error = $_GET['error'] ?? null;
+?>
+<?php
 session_start();
 
 require_once '../../../db/db_conn.php';
@@ -6,10 +9,27 @@ require_once '../../../utils/auth.php';
 
 $conn = getDbConnection();
 
-if (!isset($_SESSION['user_id'])) {
-  redirectUser('../auth/driver_login.php');
-  exit;
+$latestStatus = null;
+$checkLatest = $conn->prepare("
+  SELECT status FROM driver_applications 
+  WHERE user_id = ? 
+  ORDER BY applied_at DESC LIMIT 1
+");
+$checkLatest->bind_param("i", $_SESSION['user_id']);
+$checkLatest->execute();
+$checkLatest->bind_result($latestStatus);
+$checkLatest->fetch();
+$checkLatest->close();
+
+if (
+    !isset($_SESSION['user_id']) ||
+    !isset($_SESSION['role']) ||
+    $_SESSION['role'] !== 'driver'
+) {
+    redirectUser('../auth/driver_login.php');
+    exit;
 }
+
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -40,7 +60,7 @@ $counts = $conn->query($query)->fetch_assoc();
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Driver Dashboard - Pending</title>
+  <title>Driver Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -53,7 +73,12 @@ $counts = $conn->query($query)->fetch_assoc();
 
 </head>
 <body class="bg-light">
-
+<?php if ($error === 'pending'): ?>
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Heads up!</strong> You already have a pending application. Please wait for it to be reviewed before submitting a new one.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<?php endif; ?>
 <?php
 $userName = $_SESSION['first_name'] ?? 'User';
 ?>
@@ -79,7 +104,22 @@ $userName = $_SESSION['first_name'] ?? 'User';
 <div class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="fw-bold mb-0">Applications Overview</h2>
-     <a href="/driver/apply" class="btn fw-bold" style="background-color: #3F562C; color: white;">Add Application</a>
+     <?php
+$hasPending = ($latestStatus === 'pending');
+$canUpdate = ($latestStatus === 'cancelled');
+
+?>
+<?php if ($hasPending): ?>
+  <button class="btn fw-bold" style="background-color: #aaa; color: white;" disabled>
+    Add Application
+  </button>
+<?php else: ?>
+  <a href="/users-payments-management-system/views/driver/dashboard/applicationform.php" class="btn fw-bold" style="background-color: <?= $canUpdate ? '#E8B364' : '#3F562C' ?>; color: white;">
+    <?= $canUpdate ? 'Add Application' : 'Add Application' ?>
+  </a>
+<?php endif; ?>
+
+
   </div>
 
   <!-- Applications Overview -->

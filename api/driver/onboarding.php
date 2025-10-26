@@ -5,6 +5,13 @@ require_once __DIR__ . '/../../utils/utils.php';
 require_once __DIR__ . '/../../utils/auth.php';
 require_once __DIR__ . '/../../queries/driver.php';
 
+// Utility function to generate driver app IDs
+function generateDriverAppId($length = 10) {
+    $random = strtoupper(bin2hex(random_bytes($length)));
+    $random = substr($random, 0, $length);
+    return 'DRV-APP-' . $random;
+}
+
 $conn = getDbConnection();
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {

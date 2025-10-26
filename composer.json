@@ -1,9 +1,14 @@
 {
-    "require": {
-        "vlucas/phpdotenv": "^5.6",
-        "predis/predis": "^3.2",
-        "league/oauth2-google": "^4.0",
-        "cloudinary/cloudinary_php": "*",
-        "hidehalo/nanoid-php": "^2.0"
+  "require": {
+    "vlucas/phpdotenv": "^5.6",
+    "predis/predis": "^3.2",
+    "league/oauth2-google": "^4.0",
+    "cloudinary/cloudinary_php": "^3.1",
+    "hidehalo/nanoid-php": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Cloudinary\\": "vendor/cloudinary/cloudinary_php/src/"
     }
+  }
 }
