@@ -1,44 +1,5 @@
 <?php 
 
-/**
- * Debug function to show the prepared query with actual values
- */
-function debugPreparedStatement($query, $types, $params) {
-    echo "<h3>Debug Prepared Statement:</h3>";
-    echo "<strong>Original Query:</strong><br>";
-    echo "<pre>" . htmlspecialchars($query) . "</pre><br>";
-    
-    echo "<strong>Parameter Types:</strong> " . $types . "<br>";
-    echo "<strong>Parameters:</strong><br>";
-    echo "<pre>" . print_r($params, true) . "</pre>";
-    
-    // Simulate the final query (approximate)
-    $debugQuery = $query;
-    $paramIndex = 0;
-    
-    // Replace ? with actual values for visualization
-    $finalQuery = preg_replace_callback('/\?/', function($matches) use ($params, &$paramIndex) {
-        if (isset($params[$paramIndex])) {
-            $value = $params[$paramIndex];
-            $paramIndex++;
-            
-            // Add quotes for strings, keep numbers as-is
-            if (is_string($value)) {
-                return "'" . addslashes($value) . "'";
-            } elseif (is_null($value)) {
-                return "NULL";
-            } else {
-                return $value;
-            }
-        }
-        return '?';
-    }, $debugQuery);
-    
-    echo "<strong>Approximate Final Query:</strong><br>";
-    echo "<pre>" . htmlspecialchars($finalQuery) . "</pre>";
-    echo "<hr>";
-}
-
 function getAllBusinessRoles($conn) {
     $query = "SELECT * FROM business_rep_positions";
     $result = $conn->query($query);
@@ -145,15 +106,17 @@ function createBusinessAppPhotos($conn, $photo) {
     $query ="
         INSERT INTO business_app_photos (
             business_app_id,
-            photo_url
-        ) VALUES (?, ?)
+            photo_url,
+            public_id
+        ) VALUES (?, ?, ?)
     ";
 
     $stmt = $conn->prepare($query);
     $stmt->bind_param(
-        "is",
+        "iss",
         $photo['business_app_id'],
-        $photo['photo_url']
+        $photo['photo_url'],
+        $photo['public_id']
     );
     return $stmt->execute();
 }
@@ -372,5 +335,155 @@ function updateBusinessRepInfo($conn, $repData) {
 
     return $stmt->execute();
 }
+
+function getBusinessById($conn, $businessId) {
+    $stmt = $conn->prepare("
+        SELECT 
+            b.*, 
+            b_t.business_type_name, 
+            b_rp.business_position_name, 
+            b_a.application_status, 
+            b_a.updated_at,
+            b_a.created_at as application_created_at,
+            b_a.public_business_application_id,
+            b_a.application_status,
+            group_concat(b_p.photo_url) 
+        FROM businesses AS b 
+        LEFT JOIN business_rep_positions AS b_rp
+        ON b.business_rep_position_id = b_rp.business_rep_position_id
+        LEFT JOIN business_types AS b_t
+        ON b.business_type_id = b_t.business_type_id
+        LEFT JOIN business_photos AS b_p
+        ON b.business_id = b_p.business_id
+        LEFT JOIN business_applications AS b_a
+        ON b.active_application_id = b_a.business_application_id
+        WHERE b.business_id = ?
+        GROUP BY b.business_id;
+    ");
+    $stmt->bind_param("i", $businessId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_assoc();
+}
+
+function getBusinessIdByPublicId($conn, $publicId) {
+    $stmt = $conn->prepare("SELECT business_id FROM businesses WHERE public_business_id = ?;");
+    $stmt->bind_param("s", $publicId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_assoc()['business_id'];
+}
+
+function updateBusinessProfileImg($conn, $businessId, $imgUrl) {
+    $query = "UPDATE businesses 
+    SET business_profile_img = ? 
+    WHERE business_id = ?";
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("si", $imgUrl, $businessId);
+
+    return $stmt->execute();
+}
+
+function updateBusinessCoverImg($conn, $businessId, $imgUrl) {
+    $query = "UPDATE businesses 
+    SET business_cover_img_url = ? 
+    WHERE business_id = ?";
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("si", $imgUrl, $businessId);
+
+    return $stmt->execute();
+}
+
+function updateBusinessInfo($conn, $businessData) {
+    $query = "UPDATE businesses 
+    SET business_name = ?, 
+        business_desc = ?, 
+        business_type_id = ?, 
+        business_contact_num = ?, 
+        business_email = ?,  
+        business_unit_number = ?, 
+        business_street = ?, 
+        business_city = ?, 
+        business_province = ?, 
+        business_postal_code = ?, 
+        business_country = ?, 
+        loc_lat = ?, 
+        loc_long = ?, 
+        is_operating = ?
+    WHERE business_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param(
+        "ssissssssssssii",
+        $businessData['business_name'],
+        $businessData['business_desc'],
+        $businessData['business_type_id'],
+        $businessData['business_contact_num'],
+        $businessData['business_email'],
+        $businessData['business_unit_number'],
+        $businessData['business_street'],
+        $businessData['business_city'],
+        $businessData['business_province'],
+        $businessData['business_postal_code'],
+        $businessData['business_country'],
+        $businessData['loc_lat'],
+        $businessData['loc_long'],
+        $businessData['is_operating'],
+        $businessData['business_id']
+    );
+
+    return $stmt->execute();
+}
+
+function getBusinessPhotosByBusinessId($conn, $businessId) {
+    $stmt = $conn->prepare("SELECT * FROM business_photos WHERE business_id = ?");
+    $stmt->bind_param("i", $businessId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+function getBusinessPhotoById($conn, $photoId) {
+    $stmt = $conn->prepare("SELECT * FROM business_photos WHERE business_photo_id = ?");
+    $stmt->bind_param("i", $photoId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_assoc();
+}
+
+// always pass multiple ids as array and single id as integer
+function deleteBusinessPhotosById($conn, $photoIds) {
+    if(is_array($photoIds)) {
+        $query = "DELETE FROM business_photos WHERE business_photo_id IN (" 
+        . implode(',', array_map('intval', $photoIds)) 
+        . ")";
+        $stmt = $conn->prepare($query);
+    } else {
+        $query = "DELETE FROM business_photos WHERE business_photo_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $photoIds);
+    }
+    return $stmt->execute();
+}
+
+// always pass multiple ids as array and single id as integer
+function getBusinessPhotosById($conn, $photoIds) {
+    if(is_array($photoIds)) {
+        $query = "SELECT * FROM business_photos WHERE business_photo_id IN (" 
+        . implode(',', array_map('intval', $photoIds)) 
+        . ")";
+        $stmt = $conn->prepare($query);
+    } else {
+        $query = "SELECT * FROM business_photos WHERE business_photo_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $photoIds);
+    }
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+
 
 ?>

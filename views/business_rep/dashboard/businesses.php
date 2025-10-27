@@ -6,6 +6,11 @@
     require_once __DIR__ . '/../../../utils/auth.php';
     require_once __DIR__ . '/../../../queries/business.php';
 
+    if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'bus_rep') {
+        redirectUser('../auth/business_rep_login.php');
+        exit();
+    }
+
     $conn = getDbConnection();
 
     $repId = getBusinessRepByUserId($conn, $_SESSION['user_id'])['business_rep_id'];
@@ -56,13 +61,19 @@
                         <div class="d-flex flex-wrap gap-4 px-md-4 py-4">
                             <?php foreach($businesses as $b){ ?>
                             <div class="rounded overflow-hidden bg-white border border-light-gray" style="width: 18rem;">
-                                <img src="https://images.summitmedia-digital.com/realliving/resize/images/2017/10/15/dapitan-wide-16.webp" class="card-img-top" alt="..." style="height: 120px; object-fit: cover;">
+                                <img src="<?php echo $b['business_cover_img_url'] ? $b['business_cover_img_url'] : 'https://www.ufwc.co.uk/images/no-img-placeholder.png'; ?>" class="card-img-top" alt="..." style="height: 120px; object-fit: cover;">
                                 <div class="p-3">
                                     <h6 class=" fw-bold text-brand-primary"><?php echo $b['business_name']; ?></h6>
-                                    <p class=" small text-muted"><?php echo $b['business_desc']; ?></p>
+                                    <p class=" small text-muted ellipsis"><?php echo $b['business_desc']; ?></p>
                                     <div class="d-flex justify-content-end gap-2">
-                                        <a href="#" class="btn bg-brand-secondary text-white btn-sm">Edit</a>
-                                        <a href="#" class="btn bg-brand-primary btn-brand-primary text-white btn-sm">View</a>
+                                        <form action="edit-business.php" method="get">
+                                            <input type="hidden" name="id" value="<?php echo $b['public_business_id']; ?>">
+                                            <button type="submit" class="btn bg-brand-primary bg-brand-secondary btn-brand-secondary text-white btn-sm">Edit</button>
+                                        </form>
+                                        <form action="view-business.php" method="get">
+                                            <input type="hidden" name="id" value="<?php echo $b['public_business_id']; ?>">
+                                            <button type="submit" class="btn bg-brand-primary btn-brand-primary text-white btn-sm">View</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
