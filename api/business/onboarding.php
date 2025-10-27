@@ -115,11 +115,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'folder' => 'journeolink/businesses'
                 ]);
 
+
                 $uploadedBusinessPhotos[] = [
                     'doc_type' => $file['doc_type'],
                     'url' => $uploadResult['secure_url'],
                     'public_id' => $uploadResult['public_id']
                 ];
+
             }
 
             $publicRepId = "BUS-REP-" . strtoupper(generateNanoId(10));
@@ -178,10 +180,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // save business photos
             foreach ($uploadedBusinessPhotos as $photo) {
-                $photo['business_app_id'] = $businessAppId;
-                $photo['photo_url'] = $photo['url'];
-                $photo['public_photo_id'] = $photo['public_id'];
-                createBusinessAppPhotos($conn, $photo);
+                $photoToUpload = [];
+                $photoToUpload['business_app_id'] = $businessAppId;
+                $photoToUpload['photo_url'] = $photo['url'];
+                $photoToUpload['public_id'] = $photo['public_id'];
+                createBusinessAppPhotos($conn, $photoToUpload);
             }
 
             // commit transaction
@@ -189,8 +192,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             redirectUser('../../views/business_rep/onboarding/onboarding-success.php');
         } catch(Exception $e) {
-            print_r($e);
-            $conn->rollback();
+             $conn->rollback();
+            print_r($e->getMessage());
+            exit;
+           
             try {
                 // delete uploaded files if transaction fails
                 if(!empty($uploadedBusinessPhotos)) {
@@ -208,22 +213,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // log error
                 error_log("Error deleting uploaded files: " . $ex->getMessage());
             }
-            // if(!empty($uploadedBusinessPhotos)) {
-            //     foreach($uploadedBusinessPhotos as $file){
-            //         $mediaStore->uploadApi()->destroy($file['public_id']);
-            //     }
-            // }
-
-            // if(!empty($uploadedBusinessFiles)) {
-            //     foreach($uploadedBusinessFiles as $file){
-            //         $mediaStore->uploadApi()->destroy($file['public_id']);
-            //     }
-            // }
-            
-            exit();
             // redirect to error page
-            // redirectUser('../../views/business_rep/onboarding/onboarding-error.php');
-            // exit;
+            redirectUser('../../views/business_rep/onboarding/onboarding-error.php');
+            exit;
         }
 
         $conn->close();

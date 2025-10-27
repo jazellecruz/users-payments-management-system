@@ -204,6 +204,7 @@ CREATE TABLE businesses (
     loc_long DECIMAL(11, 8) NOT NULL,
     is_operating BOOLEAN DEFAULT FALSE,
     business_profile_img VARCHAR(255) DEFAULT NULL,
+    business_thumbnail_img VARCHAR(255) DEFAULT NULL,
     business_permit_url VARCHAR(255) NOT NULL,
     authorization_letter_url VARCHAR(255), -- nullable for business owners
     agreed_to_terms BOOLEAN DEFAULT FALSE,

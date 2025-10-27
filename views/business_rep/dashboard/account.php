@@ -83,7 +83,7 @@
                                             id="previewProfileImgEdit"
                                         >
                                         <label for="profile_image" class="form-label">Profile Image</label>
-                                        <input class="form-control form-control-sm" type="file" name="profile_image" id="profile_image" 
+                                        <input class="form-control form-control-sm img-input" type="file" name="profile_image" data-target="previewProfileImgEdit" id="profile_image"
                                             value=""
                                             placeholder="<?php echo $imgFileName; ?>"
                                         >
@@ -159,22 +159,6 @@
         </div>
     </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <script>
-        // Preview selected profile image before upload
-        const profileImageInput = document.getElementById('profile_image');
-        const previewProfileImgEdit = document.getElementById('previewProfileImgEdit');
-
-        profileImageInput.addEventListener('change', function(e) {
-            console.log(e.target.result);
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    previewProfileImgEdit.setAttribute('src', e.target.result);
-                }
-                reader.readAsDataURL(file);
-            }
-        }); 
-    </script>
+<script src="../../../public/js/business-dashboard.js"></script>
 </body>
 </html>

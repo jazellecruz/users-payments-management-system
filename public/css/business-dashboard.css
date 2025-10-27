@@ -38,3 +38,87 @@
 label {
     font-size: 12.5px;
 }
+
+
+.cover-img-edit-overlay {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    width: 100%;
+}
+
+.avt-img-container:hover .cover-img-edit-overlay {
+    opacity: 1;
+}
+
+.cover-img-edit-overlay button{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+.info-popover-icon {
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.checkbox-lg .custom-check-input {
+    top: 0.8rem;
+    scale: 1.4;
+    margin-right: 0.5rem;
+}
+
+
+.checked-img-overlay {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.image-container input[type="checkbox"]:checked + .checked-img-overlay {
+    opacity: 1;
+}
+
+.checked-img-overlay {
+    background-color: rgba(28, 28, 28, 0.5);
+}
+
+.preview-upload-item {
+    position: relative;
+    height: 250px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.preview-upload-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.remove-upload-btn {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+    cursor: pointer;
+}

@@ -92,3 +92,16 @@ body {
 .btn-brand-secondary:hover {
     background-color: #7f7733ff;
 }
+
+.ellipsis {
+  white-space: nowrap;      
+  overflow: hidden;          
+  text-overflow: ellipsis;    
+  max-width: 250px;           
+}
+
+.btn-brand-primary:disabled {
+    pointer-events: none;
+    background-color: var(--primary-color) !important; /* do not remove*/
+    border-color: var(--primary-color) !important; /* do not remove*/
+}
