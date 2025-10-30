@@ -8,6 +8,7 @@ session_start();
   <meta charset="UTF-8">
   <title>Journeolink Drive</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../../public/css/global.css">
   <style>
     html, body {
       height: 100%;
@@ -113,8 +114,8 @@ session_start();
 
     <!-- Buttons -->
     <div style="display:flex; gap:1rem; margin-top:1rem;">
-      <a href="../auth/driver_login.php" class="btn-login">Login</a>
-      <a href="../auth/sign-up.php" class="btn-getstarted">
+      <a href="auth/driver_login.php" class="btn-login">Login</a>
+      <a href="auth/sign-up.php" class="btn-getstarted">
         Get Started
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
              viewBox="0 0 16 16">

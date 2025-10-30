@@ -7,6 +7,7 @@ session_start(); // Keep only if session logic is needed
   <meta charset="UTF-8">
   <title>Journeolink Business</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../../public/css/global.css">
   <style>
     html, body {
       height: 100%;
@@ -130,8 +131,8 @@ session_start(); // Keep only if session logic is needed
       </p>
 
       <div class="button-group">
-        <a href="../auth/business_rep_login.php" class="btn-login">Login</a>
-        <a href="../auth/sign-up.php" class="btn-getstarted">
+        <a href="auth/business_rep_login.php" class="btn-login">Login</a>
+        <a href="auth/sign-up.php" class="btn-getstarted">
           Get Started
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
                viewBox="0 0 16 16">
