@@ -13,9 +13,19 @@
 
     $conn = getDbConnection();
 
-    $repId = getBusinessRepByUserId($conn, $_SESSION['user_id'])['business_rep_id'];
+    if(isset($_SESSION['business_rep_id'])) {
+        $businessRepId = $_SESSION['business_rep_id'];
+    } else {
+        $res = getBusinessRepByUserId($conn, $_SESSION['user_id']);
 
-    $businesses = getBusinessesByRepId($conn, $repId);
+        if(!$res) {
+            $businessRepId = null;
+        } else {            
+            $businessRepId = $res['business_rep_id'];
+        }
+    }
+
+    $businesses = getBusinessesByRepId($conn, $businessRepId);
 
 ?>
 

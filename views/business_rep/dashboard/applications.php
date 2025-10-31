@@ -17,7 +17,14 @@
     if(isset($_SESSION['business_rep_id'])) {
         $businessRepId = $_SESSION['business_rep_id'];
     } else {
-        $businessRepId = getBusinessRepByUserId($conn, $_SESSION['user_id'])['business_rep_id'];
+        $res = getBusinessRepByUserId($conn, $_SESSION['user_id']);
+
+        if(!$res) {
+            $businessRepId = null;
+        } else {            
+            $businessRepId = $res['business_rep_id'];
+        }
+            
     }
 
     $totalApplications = getAppsCountByStatus($conn, $businessRepId, '');
@@ -68,6 +75,16 @@
         <div class="flex-grow-1 overflow-y-scroll h-100">
             <?php include_once __DIR__ . '../../../partials/business_rep/navbar.php'; ?>
             <div class="container">
+                <?php if(empty($applications)) { ?>
+                    <div class="">
+                        <div class="d-flex flex-column justify-content-center align-items-center py-5 px-md-4">
+                            <i class="bi bi-file-earmark-x-fill text-muted h1"></i>
+                            <h5 class="fw-bold  text-brand-primary mt-3">No Applications Found</h5>
+                            <p class="small text-muted text-center">Submit an application to showcase your business and let others know what you do.</p>
+                            <a class="btn btn-brand-primary bg-brand-primary text-white" href="business_application_form.php">Apply Now</a>
+                        </div>
+                    </div>   
+                <?php return; } ?>
                 <!-- overview of applications -->
                 <div class="pt-4 px-md-4 w-100">
                     <h5 class="fw-bold pb-3 text-brand-primary">Applications Overview</h5>
@@ -120,7 +137,7 @@
                                 <input class="form-control form-control-sm me-2 border-light-gray" type="search" placeholder="Search" aria-label="Search"/>
                                 <button class="btn btn-brand-primary bg-brand-primary text-white btn-sm" type="submit">Search</button>
                             </form>
-                            <a class="btn bg-brand-secondary btn-brand-secondary text-white btn-sm" href="#" role="button">New Application</a>
+                            <a class="btn bg-brand-secondary btn-brand-secondary text-white btn-sm" href="business_application_form.php" role="button">New Application</a>
                         </div>
                     </div>
 

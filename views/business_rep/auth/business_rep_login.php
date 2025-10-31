@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rep Login | JourneoLink</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../../public/css/global.css">
     <style>
         body {
             display: flex;
@@ -30,7 +32,6 @@
             padding: 20px;
             border-radius: 10px;
             text-align: center;
-            width: 400px;
         }
         .logo {
             display: block;
@@ -104,9 +105,14 @@
                 <label>Password</label>
                 <input type="password" name="password" placeholder="Password" required>
                 <button type="submit">LOG IN</button>
-                <a href="#" class="forgot-password">Forgot Password?</a>
+                <div class="d-flex justify-content-between mt-1">
+                    <a href="#" class="forgot-password">Forgot Password?</a>
+                    <a href="sign-up.php" class="forgot-password">Sign Up</a>
+                </div>
+                
             </form>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>

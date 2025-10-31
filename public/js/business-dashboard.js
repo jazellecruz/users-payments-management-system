@@ -24,7 +24,7 @@ imgInputs.forEach(input => {
     });
 });
 
-
+// to do: make map modular/reusable for multiple maps 
 mapTargetElements.forEach(e => {
     let targetMap = e.dataset.mapTarget;
     let lat = document.getElementById(e.dataset.latTarget).value;

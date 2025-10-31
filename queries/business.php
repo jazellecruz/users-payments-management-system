@@ -26,13 +26,14 @@ function createBusinessRep($conn, $businessRep) {
             user_address,
             active_phone_number,
             alternative_email,
-            valid_id_url
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            valid_id_url,
+            profile_img_url
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ";
 
     $stmt = $conn->prepare($query);
     $stmt->bind_param(
-    "isssssssssss", 
+    "issssssssssss", 
     $businessRep['user_id'], 
     $businessRep['public_id'], 
     $businessRep['first_name'], 
@@ -44,7 +45,8 @@ function createBusinessRep($conn, $businessRep) {
     $businessRep['user_address'], 
     $businessRep['active_phone_num'], 
     $businessRep['alternative_email'], 
-    $businessRep['valid_id_url']
+    $businessRep['valid_id_url'],
+    $businessRep['profile_img_url']
     );
     return $stmt->execute();
 }
