@@ -130,7 +130,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
              * ALSO USER SHOULD BE REDIRECTED FROM THE BACKEND NOT FROM THE FRONTEND.
              * refactoring this is fvking needed in the future
              */
-            if($user['role'] === 'basic') $redirectLink = '../home.php';
+            if($user['role'] === 'basic') $redirectLink = 'login.php';
             if($user['role'] === 'driver') $redirectLink = '../driver/auth/driver_login.php';
             if($user['role'] === 'bus_rep') $redirectLink = '../business_rep/auth/business_rep_login.php';
 

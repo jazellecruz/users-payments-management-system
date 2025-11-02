@@ -112,7 +112,7 @@
                   onfocus="this.placeholder=''" onblur="this.placeholder='Your Password'" required>
               </div>
               <div class="text-end mt-1" style="font-size: 15px;">
-                <a href="login.php" style="color:#000; font-weight:400; text-decoration:underline;">Forgot password?</a>
+                <a href="forgot_password.php" style="color:#000; font-weight:400; text-decoration:underline;">Forgot password?</a>
               </div>
             </div>
             <input type="hidden" name="role" value="basic">
