@@ -48,4 +48,10 @@ function updateUserInfo($conn, $userId, $data) {
     return $stmt->execute();
 }
 
+function updateAccountPassword($conn, $userId, $newHashedPassword) {
+    $stmt = $conn->prepare("UPDATE users SET password_hash = ? WHERE user_id = ?");
+    $stmt->bind_param("si", $newHashedPassword, $userId);
+    return $stmt->execute();
+}
+
 ?>
