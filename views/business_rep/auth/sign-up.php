@@ -36,7 +36,7 @@
                         <p class="fs-2 fw-bold text-brand-primary">Create a Business Account </p>
                         <p class="fs-6 text-secondary">Set up your user account to get started with Journeolink Business.</p>
                     </div>
-                    <form action="../../../api/business/auth.php" method="post" class="d-flex flex-column gap-3">
+                    <form action="../../../api/business/auth.php" method="post" class="d-flex flex-column gap-3" id="businessSignUpForm">
                         <input type="text" name="action" id="" value="business_rep_signup" hidden>
                         <input type="text" name="role" value="driver" hidden>
                         <div class="d-flex flex-column flex-md-row gap-3">
@@ -57,17 +57,26 @@
                             <label for="password" class="form-label fw-bold">Password</label>
                             <div class="input-group">
                                 <input type="password" name="password" class="form-control custom-input" id="password" placeholder="Enter your password" required>
-                                <span class="input-group-text password-toggle-btn" id="togglePassword"><i class="bi bi-eye-fill"></i></span>
+                                <span class="input-group-text togglePassword" data-target="password"><i class="bi bi-eye-slash-fill"></i></span>
                             </div>
+                            <div id="passwordCriteriaMsg" class="form-text input-note-text fst-italic text-secondary">
+                                Password must include at least one uppercase letter, one lowercase letter, and one special character.
+                            </div>   
                         </div>
                         <div>
                             <label for="confirmPassword" class="form-label fw-bold">Confirm Password</label>
                             <div class="input-group">
                                 <input type="password" class="form-control custom-input" id="confirmPassword" placeholder="Confirm your password">
-                                <span class="input-group-text password-toggle-btn" id="toggleConfirmPassword"><i class="bi bi-eye-fill"></i></span>
+                                <span class="input-group-text togglePassword" data-target="confirmPassword"><i class="bi bi-eye-slash-fill"></i></span>
+                            </div>
+                            <div id="unmatchedPasswordErr" class="form-text input-note-text fst-italic d-none text-danger">
+                                Password does not match.
                             </div>
                         </div>
-                        <button type="submit" class="sign-up-btn btn text-light primary-color mt-3">Sign Up</button>
+                        <button type="submit" class="sign-up-btn btn text-light primary-color mt-3 btn-brand-primary" id="signupBtn" disabled>
+                            <div class="spinner-border text-light loading-spinner d-none small" role="status" style="width: 20px; height: 20px;"></div>
+                            Sign Up
+                        </button>
                     </form>
                     <div class="text-center">
                         <p class="text-secondary">Already have an account? <a href="./business_rep_login.php" class="text-brand-secondary">Log in</a></p>
@@ -79,6 +88,6 @@
     </div>
     <!-- END OF MAIN CONTAINER -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <script src="../../../public/js/driver-signup.js"></script>
+    <script src="../../../public/js/business-signup.js"></script>
 </body>
 </html>

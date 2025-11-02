@@ -3,7 +3,7 @@ const confirmPassword = document.getElementById('confirmPassword');
 const unmatchedPasswordErr = document.getElementById('unmatchedPasswordErr');
 const passwordCriteriaMsg = document.getElementById('passwordCriteriaMsg');
 const signupBtn = document.getElementById('signupBtn');
-const driverSignupForm = document.getElementById('driverSignupForm');
+const businessSignUpForm = document.getElementById('businessSignUpForm');
 
 password.addEventListener('input', () => {
     updateSubmitBtnState();
@@ -69,7 +69,7 @@ const updateUnmatchedPasswordErrState = () => {
     unmatchedPasswordErr.classList.add('d-none');
 }
 
-driverSignupForm.addEventListener('submit', () => {
+businessSignUpForm.addEventListener('submit', () => {
     const spinner = signupBtn.querySelector('.loading-spinner');
     spinner.classList.remove('d-none');
     signupBtn.disabled = true;

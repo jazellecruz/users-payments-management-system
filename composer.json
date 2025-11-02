@@ -4,7 +4,8 @@
     "predis/predis": "^3.2",
     "league/oauth2-google": "^4.0",
     "cloudinary/cloudinary_php": "^3.1",
-    "hidehalo/nanoid-php": "^2.0"
+    "hidehalo/nanoid-php": "^2.0",
+    "phpmailer/phpmailer": "^7.0"
   },
   "autoload": {
     "psr-4": {

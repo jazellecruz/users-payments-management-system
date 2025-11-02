@@ -107,7 +107,7 @@
                 <input type="password" name="password" placeholder="Password" required>
                 <button type="submit">LOG IN</button>
                 <div class="d-flex justify-content-between mt-1">
-                    <a href="#" class="forgot-password">Forgot Password?</a>
+                    <a href="../../auth/forgot_password.php" class="forgot-password">Forgot Password?</a>
                     <a href="sign-up.php" class="forgot-password">Sign Up</a>
                 </div>
             </form>
