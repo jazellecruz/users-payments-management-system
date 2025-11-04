@@ -36,8 +36,8 @@ CREATE TABLE oauth_accounts (
     user_id INT NOT NULL,    
     oauth_user_id VARCHAR(255) UNIQUE NOT NULL,
     provider ENUM('google', 'facebook') NOT NULL,
-    access_token VARCHAR(255),
-    refresh_token VARCHAR(255),
+    access_token TEXT,
+    refresh_token TEXT,
     token_expiry TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id)

@@ -5,12 +5,11 @@ session_start();
 require_once __DIR__ . '/../../../utils/auth.php';
 
 // this onboarding page is only accessible if the user already has an account and is in and has no driver profile yet
-if(!(
-    isset($_SESSION['userId']) 
-    && isset($_SESSION['role']) 
-    && $_SESSION['role'] === 'driver' 
-    && (!isset($_SESSION['driverId']) || empty($_SESSION['driverId'])))
-    ) {
+if(
+    (!isset($_SESSION['isForOnboarding']) 
+    || !($_SESSION['isForOnboarding'] === true) 
+    && !($_SESSION['role'] === 'driver'))
+) {
     redirectUser('../auth/sign-up.php');
     exit;
 } 
@@ -51,7 +50,7 @@ if(!(
         <div class="flex-grow-1 container p-0 main-content-wrapper">
                 <div class=" border-box d-flex flex-column justify-content-center gap-3 form-content-container">
                     <form method="POST" action="../../../api/driver/onboarding.php" class="swiper form-swiper" id="onboardingForm" enctype="multipart/form-data">
-                        <input name="user_acc_id" type="text" value="<?php echo $_SESSION['userId'] ?>" hidden>
+                        <input name="user_acc_id" type="text" value="<?php echo $_SESSION['user_id'] ?>" hidden>
                         <input name="action" type="text" value="driver_onboarding" hidden>
                         <div class="swiper-wrapper">
                             <div class="swiper-slide d-flex flex-column gap-3">

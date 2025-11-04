@@ -15,7 +15,10 @@ if (!empty($_GET['error'])) {
 if (empty($_GET['code'])) {
     $role = $_GET['role'];
     $authUrl = $provider->getAuthorizationUrl([
-        "state" => json_encode(["role" => $role]) 
+        "state" => json_encode([
+            "role" => $role,
+            "forOnboarding" => isset($_GET['for-onboarding']) ? true : false 
+            ]) 
     ]);
     $_SESSION['oauth2state'] = $provider->getState();
     header('Location: ' . $authUrl);

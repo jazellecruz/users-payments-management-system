@@ -39,7 +39,7 @@ $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
 $limit = 5;
 $offset = ($page - 1) * $limit;
 
-$countQuery = "SELECT COUNT(*) AS total FROM driver_applications";
+$countQuery = "SELECT COUNT(*) AS total FROM driver_applications WHERE user_id = " . $_SESSION['user_id'];
 $countResult = $conn->query($countQuery);
 $totalRows = $countResult ? $countResult->fetch_assoc()['total'] : 0;
 $totalPages = ceil($totalRows / $limit);
@@ -49,8 +49,7 @@ $query = "
         COUNT(*) AS total,
         SUM(status = 'pending') AS pending,
         SUM(status = 'rejected') AS rejected
-    FROM driver_applications
-";
+    FROM driver_applications WHERE user_id = " . $_SESSION['user_id'];
 $counts = $conn->query($query)->fetch_assoc();
 ?>
 
@@ -239,8 +238,9 @@ $query = "
   alternative_email,
   license_number,
   license_expiry_date
-FROM driver_applications
-ORDER BY applied_at DESC
+FROM driver_applications 
+WHERE user_id = " . $_SESSION['user_id'] . "
+ORDER BY applied_at DESC 
 ";
 
 

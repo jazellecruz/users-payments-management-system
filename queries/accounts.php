@@ -6,9 +6,10 @@ function createUserAccount($conn, $user) {
     $role = $user['role'];
     $firstName = $user['firstName'];
     $lastName = $user['lastName'];
+    $accImgUrl = isset($user['acc_img_url']) ? $user['acc_img_url'] : null;
 
-    $stmt = $conn->prepare("INSERT INTO users (email, password_hash, first_name, last_name, role) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $email, $password, $firstName, $lastName, $role);
+    $stmt = $conn->prepare("INSERT INTO users (email, password_hash, first_name, last_name, role, acc_img_url) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssss", $email, $password, $firstName, $lastName, $role, $accImgUrl);
     return $stmt->execute();
 }
 
