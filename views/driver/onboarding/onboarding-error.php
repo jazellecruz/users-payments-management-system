@@ -84,6 +84,9 @@
                     <a href="/users-payments-management-system/driver/auth/sign-in" role="button" class="btn btn-sm btn-secondary">
                         Go Home
                     </a>
+                    <a href="../auth/driver_login.php" role="button" class="btn btn-sm text-white bg-brand-primary btn-brand-primary">
+                        Proceed to Dashboard
+                    </a>
                 </div>
             </div>
             </div>

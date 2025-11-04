@@ -31,8 +31,8 @@
             <div>
                 <div class="container d-flex flex-column justify-content-center gap-3 form-content-container" style="">
                     <div>
-                        <p class="fs-2 fw-bold text-brand-primary">Create an Account </p>
-                        <p class="fs-6 text-secondary">Set up your user account to get started with Journeolink.</p>
+                        <p class="fs-3 fw-bold text-brand-primary mb-1">Create an Account </p>
+                        <p class="fs-6 text-secondary mb-3">Set up your user account to get started with Journeolink.</p>
                     </div>
                     <form action="../../../api/driver/auth.php" method="post" class="d-flex flex-column gap-3" id="driverSignupForm">
                         <input type="text" name="action" id="" value="driver_signup" hidden>
@@ -71,13 +71,24 @@
                                 Password does not match.
                             </div>
                         </div>
-                        <button type="submit" class="bg-brand-primary btn text-light primary-color mt-3 btn-brand-primary" id="signupBtn" disabled>
+                        <button type="submit" class="bg-brand-primary btn text-light primary-color mt-3 btn-brand-primary btn-sm" id="signupBtn" disabled>
                             <div class="spinner-border text-light loading-spinner d-none small" role="status" style="width: 20px; height: 20px;"></div>
                             Sign Up
                         </button>
                     </form>
                     <div class="text-center">
-                        <p class="text-secondary">Already have an account? <a href="./driver_login.php" class="text-brand-secondary">Log in</a></p>
+                        <p class="text-secondary mb-0">Already have an account? <a href="./driver_login.php" class="text-brand-secondary">Log in</a></p>
+                    </div>
+                    <div class="w-100">
+                        <form action="../../../api/oauth/auth.php" method="get">
+                            <input type="hidden" name="role" value="driver">
+                            <input type="hidden" name="for-onboarding" value="true">
+                            <input type="text" name="action" id="" value="driver_signup" hidden>
+                            <button type="submit" class="btn btn-light btn-sm w-100 border border-light-gray rounded d-flex flex-row justify-content-center align-items-center gap-2 mt-2">
+                                <img src="../../../public/images/image 3.png" alt="" srcset="" height="16">
+                                Sign Up with Google
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

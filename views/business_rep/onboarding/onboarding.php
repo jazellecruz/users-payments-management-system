@@ -7,7 +7,11 @@ require_once('../../../queries/business.php');
 require_once('../../../utils/auth.php');
 
 // require a business rep user to access this page
-if(!isset($_SESSION['active_applicant']) && !($_SESSION['active_applicant']['role'] === 'bus_rep')) {
+if(
+    (!isset($_SESSION['isForOnboarding']) 
+    || !($_SESSION['isForOnboarding'] === true) 
+    && !($_SESSION['role'] === 'bus_rep'))
+) {
     redirectUser('../../business_rep/auth/sign-up.php');
 } 
 
@@ -54,7 +58,7 @@ $businessTypes = getAllBusinessTypes($conn);
         <div class="d-flex flex-column container">
             <div class="form-wrapper px-md-5 " style="">
                 <form method="POST" action="../../../api/business/onboarding.php" id="onboardingForm" enctype="multipart/form-data">
-                    <input name="user_acc_id" type="text" value="<?php echo $_SESSION['active_applicant']['user_id'] ?>" hidden>
+                    <input name="user_acc_id" type="text" value="<?php echo $_SESSION['user_id'] ?>" hidden>
                     <input name="action" type="text" value="business_onboarding" hidden>
                     <div class="swiper vh-100 form-swiper">
                         <div class="swiper-wrapper">

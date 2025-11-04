@@ -109,8 +109,16 @@
                     <a href="../../auth/forgot_password.php" class="forgot-password">Forgot Password?</a>
                     <a href="sign-up.php" class="forgot-password">Sign Up</a>
                 </div>
-                
             </form>
+            <div class="w-100">
+                <form action="../../../api/oauth/auth.php" method="get">
+                    <input type="hidden" name="role" value="bus_rep">
+                    <button type="submit" class="btn btn-light w-100 border border-light-gray rounded d-flex flex-row justify-content-center align-items-center gap-2 mt-2">
+                        <img src="../../../public/images/image 3.png" alt="" srcset="" height="16">
+                        Continue with Google
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>

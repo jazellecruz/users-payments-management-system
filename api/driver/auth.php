@@ -40,15 +40,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         if($createUser) {
             $lastid = $conn->insert_id;
             $newUser = getUserAccById($conn, $lastid);
-            $userData = [
-                'user_id' => $newUser['user_id'],
-                'email' => $newUser['email'],
-                'first_name' => $newUser['first_name'],
-                'last_name' => $newUser['last_name'],
-                'role' => $newUser['role']
-            ];
-            // optional: add unverified status of driver in session
-            generateSession($userData);
+
+            $_SESSION['user_id'] = $newUser['user_id'];
+            $_SESSION['email'] = $newUser['email'];
+            $_SESSION['first_name'] = $newUser['first_name'];
+            $_SESSION['last_name'] = $newUser['last_name'];
+            $_SESSION['role'] = $newUser['role'];
+            $_SESSION['isForOnboarding'] = true; // after signup, user is always redirected to onboarding
+
             redirectUser('../../views/driver/onboarding/onboarding.php');
         } else {
             echo "Error creating account. Please try again.";
