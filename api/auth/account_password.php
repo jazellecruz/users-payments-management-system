@@ -44,7 +44,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             $redisClient->hmset($sessionKey, $sessData);
             $redisClient->expire($sessionKey, RES_PASS_SESS_LIFETIME); // key will only be "alive" for 15 minutes
 
-            $resetPassSessUrl = BASE_URL . "views/auth/reset_password.php?session_id=" . urlencode($resPassSessId);
+            $resetPassSessUrl = BASE_URL . "/views/auth/reset_password.php?session_id=" . urlencode($resPassSessId);
 
             $emailMsg = generateResetPasswordEmail($userFirstName, $resetPassSessUrl);
 

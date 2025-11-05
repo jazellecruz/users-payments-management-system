@@ -36,8 +36,8 @@
                         <p class="fs-3 fw-bold text-brand-primary mb-1">Create a Business Account </p>
                         <p class="fs-6 text-secondary mb-3">Set up your user account to get started with Journeolink Business.</p>
                     </div>
-                    <form action="../../../api/business/auth.php" method="post" class="d-flex flex-column gap-3" id="businessSignUpForm">
-                        <input type="text" name="action" id="" value="business_rep_signup" hidden>
+                    <form action="../../../api/auth/signup_account.php" method="post" class="d-flex flex-column gap-3" id="businessSignUpForm">
+                        <input type="text" name="action" id="" value="account_signup" hidden>
                         <input type="text" name="role" value="bus_rep" hidden>
                         <div class="d-flex flex-column flex-md-row gap-3">
                             <div class="w-100">

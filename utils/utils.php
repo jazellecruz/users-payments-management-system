@@ -208,4 +208,111 @@ function generateResetPasswordEmail($firstName, $resetLink) {
 function hashResetPassSessionId($sessionId) {
     return hash_hmac(REDIS_HASH_ALGO, $sessionId, REDIS_HASH_KEY);
 }
+
+function hashVerificationCode($code) {
+    return hash_hmac('sha256', $code, VERIFICATION_CODE_HASH_KEY);
+}
+
+function generateVerificationCode() {
+    return generateNanoId(VERIFICATION_CODE_LENGTH);
+}
+
+function generateVerificationEmail($emailData) {
+    $emailBody = "
+                <!DOCTYPE html>
+        <html lang='en'>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <style type='text/css'>
+                h2 {
+                    color: #3F562C;
+                    font-family: 'Optima', sans-serif;
+                }
+                p {
+                    font-size: 14px;
+                    color: #333;
+                    font-family: 'Optima', sans-serif;
+                }
+                .email-container {
+                    font-family: 'Optima', sans-serif;
+                    text-align: left;
+                    padding: 60px 20px; 
+                    background-color: #f1ffe5ff;
+                }
+
+                .email-message-container {
+                    max-width: 600px;
+                    margin: auto;
+                    background-color: #fff;
+                    border: 0.5px solid rgba(230, 230, 230, 1);
+                    border-radius: 10px;
+                }
+
+                .email-icon {
+                    width: 80px;
+                    padding-top: 20px;
+                }
+
+                .email-body {
+                    padding: 0 20px 20px 20px;
+                }
+
+                .reset-btn{
+                    display: inline-block;
+                    padding: 10px 20px;
+                    background-color: #3F562C;
+                    text-decoration: none;
+                    border-radius: 5px;
+                    margin: 10px 0;
+                    font-size: 14px;
+                    color: #fff;
+                    border: none;
+                    cursor: pointer;
+                }
+
+                .journeolink-team-text {
+                    font-weight: 600;
+                    font-style: italic;
+                    color: #3F562C;
+                    padding-top: 20px;
+                }
+
+                @media only screen and (max-width: 1000px){
+                    .email-container {
+                        padding: 40px 10px; 
+                    }
+
+                    .email-message-container {
+                        width: 100%;
+                    }
+                }
+                
+            </style>
+        </head>
+        <body>
+            <div class='email-container'>
+                <div class='email-message-container'>
+                    <!-- <div class='email-header'>
+                    </div> -->
+                    <div class='email-body'>
+                        <img src='../public/images/verify-email-icon-v2.png' class='email-icon' alt='' srcset=''>
+                        <h2>Please Verify Your Email</h2>
+                        <p style='line-height: 1.7;'>Hi, ". htmlspecialchars($emailData['userName']) ." 👋 Thank you for signing up on Journeolink! To access your account and continue onboarding, we need to verify your email address.</p>
+                        <p>To verify your email address, please click the link below:</p>
+                        <a  href='". htmlspecialchars($emailData['resetLink']) ."'>
+                            <button class='reset-btn'>Verify Email</button>
+                        </a>
+                        <p>This link will expire in <strong>15 minutes</strong>, so please make sure to verify your email soon.</p>
+                        <p>If you did not sign up for an account, please ignore this email.</p>
+                        <p class='journeolink-team-text'>Journeolink Team</p>
+                    </div>
+                </div>
+            </div>
+        </body>
+        </html>
+    "; 
+
+    return $emailBody;
+}
 ?>

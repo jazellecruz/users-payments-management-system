@@ -118,7 +118,7 @@ function handleOAuthBusRepUser() {
         $_SESSION["last_name"] = $user['last_name'];
         $_SESSION["email"] = $user['email'];
         $_SESSION["acc_img_url"] = $user['acc_img_url'];
-        $_SESSION["isForOnboarding"] = $userForOnboarding;
+        $_SESSION["isForOnboarding"] = $userForOnboarding; // for when user needs to be redirected to onboarding page
 
         $redirectUrl = $userForOnboarding 
         ? "../../views/business_rep/onboarding/onboarding.php" 
@@ -140,7 +140,7 @@ function handleOAuthDriverUser() {
     $intendedRole = $decodedState['role'];
     $userForOnboarding = $decodedState['forOnboarding'];
     $user = null;
-    $userProfile = null;
+
 
     $redirectUrl = null;
 
