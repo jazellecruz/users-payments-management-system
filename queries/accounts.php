@@ -55,4 +55,32 @@ function updateAccountPassword($conn, $userId, $newHashedPassword) {
     return $stmt->execute();
 }
 
+function createUnverifiedUserAccount($conn, $user) {
+    $email = $user['email'];
+    $verificationCode = $user['verification_code'];
+    $hashedPassword = $user['hashedPassword'];
+    $role = $user['role'];
+    $firstName = $user['firstName'];
+    $lastName = $user['lastName'];
+    $expiresAt = $user['expires_at'];
+
+    $stmt = $conn->prepare("INSERT INTO unverified_users (email, password_hash, verification_code, role, first_name, last_name, expires_at) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssss", $email, $hashedPassword, $verificationCode, $role, $firstName, $lastName, $expiresAt);
+    return $stmt->execute();
+}
+
+function getUnverifiedUserByCodeAndEmail($conn, $email, $verificationCode) {
+    $stmt = $conn->prepare("SELECT * FROM unverified_users WHERE email = ? AND verification_code = ?");
+    $stmt->bind_param("ss", $email, $verificationCode);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_assoc();
+}
+
+function deleteUnverifiedUserById($conn, $id) {
+    $stmt = $conn->prepare("DELETE FROM unverified_users WHERE unverified_user_id = ?");
+    $stmt->bind_param("i", $id);
+    return $stmt->execute();
+}
+
 ?>

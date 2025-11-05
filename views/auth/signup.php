@@ -88,7 +88,9 @@
           <h3 class="mb-1 mt-3 text-center">Sign Up</h3>
           <p class="qc-tagline mb-4 mt-0 text-center">Your QC Adventure Starts Here!</p>
 
-          <form action="loading.php" method="POST" style="width: 80%; margin: 0 auto;">
+          <form action="../../api/auth/signup_account.php" method="POST" style="width: 80%; margin: 0 auto;">
+            <input type="hidden" name="role" value="basic">
+            <input type="hidden" name="action" value="account_signup">
             <!-- Full Name -->
             <div class="mb-3">
               <label><span style="font-weight:600;">Full Name</span></label>

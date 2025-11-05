@@ -14,9 +14,10 @@ CREATE TABLE users (
     password_hash VARCHAR(255),
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
+    phone_number CHAR(11) DEFAULT NULL,
     acc_img_url VARCHAR(255) DEFAULT NULL,
     role ENUM('basic', 'driver', 'admin', 'bus_rep') NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );  
 
 CREATE TABLE admins (
@@ -28,6 +29,8 @@ CREATE TABLE admins (
     middle_name VARCHAR(100),
     ext_name VARCHAR(10),
     is_disabled BOOLEAN DEFAULT FALSE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    disabled_at DATETIME DEFAULT NULL,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
@@ -38,8 +41,8 @@ CREATE TABLE oauth_accounts (
     provider ENUM('google', 'facebook') NOT NULL,
     access_token TEXT,
     refresh_token TEXT,
-    token_expiry TIMESTAMP,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    token_expiry DATETIME,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
@@ -68,10 +71,10 @@ CREATE TABLE driver_applications (
     id_pic_img_url VARCHAR(255) NOT NULL,
     status ENUM('pending', 'approved', 'rejected', 'cancelled') DEFAULT 'pending',
     agreed_to_terms BOOLEAN DEFAULT FALSE,
-    applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    reviewed_at TIMESTAMP DEFAULT NULL,
+    applied_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    reviewed_at DATETIME DEFAULT NULL,
     reviewed_by INT DEFAULT NULL,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     remarks TEXT DEFAULT NULL,
     is_latest_approved BOOLEAN DEFAULT FALSE, -- is_latest_approved becomes true when application is approved
     FOREIGN KEY (user_id) REFERENCES users(user_id),
@@ -98,9 +101,9 @@ CREATE TABLE drivers (
     nbi_clearance_img_url VARCHAR(255) NOT NULL,
     id_pic_img_url VARCHAR(255) NOT NULL,
     agreed_to_terms BOOLEAN DEFAULT FALSE,
-    joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    joined_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     is_disabled BOOLEAN DEFAULT FALSE,
-    disabled_at TIMESTAMP DEFAULT NULL,
+    disabled_at DATETIME DEFAULT NULL,
     disabled_by INT DEFAULT NULL,
     active_application_id INT NOT NULL, -- the latest approved application to reference approved documents
     FOREIGN KEY (user_id) REFERENCES users(user_id),
@@ -112,14 +115,14 @@ CREATE TABLE business_types (
     business_type_id INT AUTO_INCREMENT PRIMARY KEY,
     business_type_code VARCHAR(50) UNIQUE NOT NULL,
     business_type_name VARCHAR(100) NOT NULL,         
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE business_rep_positions (
     business_rep_position_id INT AUTO_INCREMENT PRIMARY KEY,
     business_rep_code VARCHAR(50) UNIQUE NOT NULL,
     business_position_name VARCHAR(100) NOT NULL UNIQUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE business_reps (
@@ -138,8 +141,8 @@ CREATE TABLE business_reps (
     valid_id_url VARCHAR(255) NOT NULL,
     profile_img_url VARCHAR(255) DEFAULT NULL,
     is_disabled BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    disabled_at TIMESTAMP DEFAULT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    disabled_at DATETIME DEFAULT NULL,
     disabled_by INT DEFAULT NULL,
     FOREIGN KEY (disabled_by) REFERENCES admins(admin_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
@@ -166,16 +169,16 @@ CREATE TABLE business_applications (
     loc_lat DECIMAL(10, 8) NOT NULL,
     loc_long DECIMAL(11, 8) NOT NULL,
     application_status ENUM('pending', 'approved', 'rejected', 'cancelled') DEFAULT 'pending',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     business_permit_url VARCHAR(255) NOT NULL,
     authorization_letter_url VARCHAR(255), -- nullable for business owners
     agreed_to_terms BOOLEAN DEFAULT FALSE,
     is_operating BOOLEAN,
     is_latest_approved BOOLEAN DEFAULT FALSE, 
-    reviewed_at TIMESTAMP DEFAULT NULL,
+    reviewed_at DATETIME DEFAULT NULL,
     reviewed_by INT DEFAULT NULL,
     remarks TEXT DEFAULT NULL,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (reviewed_by) REFERENCES admins(admin_id),
     FOREIGN KEY (business_rep_id) REFERENCES business_reps(business_rep_id),
     FOREIGN KEY (business_type_id) REFERENCES business_types(business_type_id),
@@ -203,17 +206,17 @@ CREATE TABLE businesses (
     loc_lat DECIMAL(10, 8) NOT NULL, 
     loc_long DECIMAL(11, 8) NOT NULL,
     is_operating BOOLEAN DEFAULT FALSE,
-    business_profile_img VARCHAR(255) DEFAULT NULL,
-    business_thumbnail_img VARCHAR(255) DEFAULT NULL,
+    business_profile_img TEXT DEFAULT NULL,
+    business_cover_img_url TEXT DEFAULT NULL,
     business_permit_url VARCHAR(255) NOT NULL,
     authorization_letter_url VARCHAR(255), -- nullable for business owners
     agreed_to_terms BOOLEAN DEFAULT FALSE,
     active_application_id INT NOT NULL,
     is_disabled BOOLEAN DEFAULT FALSE,
-    disabled_at TIMESTAMP DEFAULT NULL, 
+    disabled_at DATETIME DEFAULT NULL, 
     disabled_by INT DEFAULT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (business_rep_id) REFERENCES business_reps(business_rep_id),
     FOREIGN KEY (business_rep_position_id) REFERENCES business_rep_positions(business_rep_position_id),
     FOREIGN KEY (business_type_id) REFERENCES business_types(business_type_id),
@@ -226,7 +229,7 @@ CREATE TABLE business_photos (
     business_id INT NOT NULL,
     public_id VARCHAR(100),
     photo_url VARCHAR(255) NOT NULL,
-    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (business_id) REFERENCES businesses(business_id)
 );
 
@@ -235,6 +238,18 @@ CREATE TABLE business_app_photos (
     business_app_id INT NOT NULL,
     public_id VARCHAR(100),
     photo_url VARCHAR(255) NOT NULL,
-    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (business_app_id) REFERENCES business_applications(business_application_id)
+);
+
+CREATE TABLE unverified_users (
+	unverified_user_id INT AUTO_INCREMENT PRIMARY KEY,
+    verification_code VARCHAR(255) UNIQUE NOT NULL,
+    expires_at DATETIME NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password_hash VARCHAR(255),
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    role ENUM('basic', 'driver', 'admin', 'bus_rep') NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
