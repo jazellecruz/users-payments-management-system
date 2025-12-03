@@ -1,7 +1,9 @@
 <?php 
 require __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '../../config/config.php';
+require_once __DIR__ . '../../enums/EWalletProviders.php';
 
+use \GuzzleHttp\Client;
 
 function hashPassword($password) {
     return password_hash($password, PASSWORD_BCRYPT);
@@ -315,4 +317,46 @@ function generateVerificationEmail($emailData) {
 
     return $emailBody;
 }
+
+function isEWalletValid($provider, $number) {
+    $validProviders = array_column(EWalletProviders::cases(), 'value');
+    $isValid = false;
+
+    // check if provider is invalid to invalidate immediately
+    if(in_array($provider, $validProviders)) $isValid = true;
+
+    if($provider === EWalletProviders::G_CASH->value) {
+        // GCash number must be 11 digits and start with '09'
+        if(preg_match('/^09\d{9}$/', $number)) $isValid = true;
+    } 
+    
+    if($provider === EWalletProviders::PAYMAYA->value) {
+        // PayMaya Wallet (not savings) number must be 11 digits and start with '09'
+        if(preg_match('/^09\d{9}$/', $number)) $isValid = true;
+    }
+
+    return $isValid;
+}
+
+function generateXenditHttpClient() {
+    $httpClient = new Client([
+        'base_uri' => XENDIT_BASE_URL,
+        'auth' => [XENDIT_API_KEY_TOKEN, ''], // store api key in username field
+        'headers' => [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json'
+        ]
+    ]);
+
+    return $httpClient;
+}
+
+function convertStrToFloat($strAmount) {
+    return floatval(number_format($strAmount, 2, '.', ''));
+}
+
+function convertToMoneyFormat($amount) {
+    return number_format($amount, 2, '.', ',');
+}
+    
 ?>
