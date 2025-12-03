@@ -46,3 +46,25 @@ VALUES
     ('SUPERVISOR', 'Supervisor'),
     ('STAFF_IN_CHARGE', 'Staff-in-Charge'),
     ('ADMIN', 'Administrator');
+
+INSERT INTO users (first_name, last_name, email, password_hash, role) VALUES
+('Jane', 'Doe', 'cruz.jazelle.lapira@gmail.com', '$2y$10$Hwmnty3GFn/ZhdmaVWSpyuiJqnm3KSqoHtHa4EWNNRsxEFMmHRiK6', 'basic'),
+('John', 'Doe', 'cruz.jazelle.lapira@gmail.com', '$2y$10$Hwmnty3GFn/ZhdmaVWSpyuiJqnm3KSqoHtHa4EWNNRsxEFMmHRiK6', 'driver');
+
+INSERT INTO platform_accounts (
+    public_platform_account_id,
+    platform_account_name,
+    platform_account_email,
+    platform_account_type,
+    external_account_id,
+    owner_type,
+    owner_id
+) VALUES (
+    'ACC-MA-CBYGKH9DVLW1',
+    'Journeolink Platform',
+    'cruz.jazelle.lapira@gmail.com',
+    'master_account',
+    '68c3f7135d83025f14eda7fa',
+    'platform',
+    null
+);
